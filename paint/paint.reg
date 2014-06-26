@@ -1,0 +1,13 @@
+REGEDIT
+; This .REG file may be used by your SETUP program.
+;   If a SETUP program is not available, the entries below will be
+;   registered in your InitInstance automatically with a call to
+;   CWinApp::RegisterShellFileTypes and COleObjectFactory::UpdateRegistryAll.
+
+
+HKEY_CLASSES_ROOT\Paint.Document = Paint Document
+HKEY_CLASSES_ROOT\Paint.Document\CLSID = {1C9AB60B-D1E9-437D-9C17-E65E8BADCEDC}
+
+HKEY_CLASSES_ROOT\CLSID\{1C9AB60B-D1E9-437D-9C17-E65E8BADCEDC} = Paint Document
+HKEY_CLASSES_ROOT\CLSID\{1C9AB60B-D1E9-437D-9C17-E65E8BADCEDC}\ProgId = Paint.Document
+HKEY_CLASSES_ROOT\CLSID\{1C9AB60B-D1E9-437D-9C17-E65E8BADCEDC}\LocalServer32 = PAINT.EXE

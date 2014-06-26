@@ -1,0 +1,42 @@
+// paint.odl : type library source for paint.exe
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (paint.tlb).
+
+[ uuid(7AFBE150-248F-4B58-8E6E-3F2E5212233C), version(1.0) ]
+library Paint
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+
+	//  Primary dispatch interface for CPaintDoc
+	
+	[ uuid(372F6618-4CDA-4606-88F4-B556A63CF94B) ]
+	dispinterface IPaint
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CPaintDoc)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CPaintDoc)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CPaintDoc
+	
+	[ uuid(1C9AB60B-D1E9-437D-9C17-E65E8BADCEDC) ]
+	coclass Document
+	{
+		[default] dispinterface IPaint;
+	};
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};
