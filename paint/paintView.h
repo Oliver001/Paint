@@ -9,17 +9,19 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "paintDoc.h"
 
 class CPaintView : public CView
 {
-protected: // create from serialization only
+public: // create from serialization only
 	CPaintView();
 	DECLARE_DYNCREATE(CPaintView)
 
 // Attributes
 public:
 	CPaintDoc* GetDocument();
-
+	void SetDocument(CPaintDoc *pDoc);
+	CDocument *pOldDoc;
 // Operations
 public:
 
@@ -48,8 +50,7 @@ protected:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CPaintView)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

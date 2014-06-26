@@ -46,7 +46,9 @@ END_INTERFACE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPaintDoc construction/destruction
 
-CPaintDoc::CPaintDoc()
+CPaintDoc::CPaintDoc():
+m_cavasH(300),
+m_cavasW(600)
 {
 	// TODO: add one-time construction code here
 

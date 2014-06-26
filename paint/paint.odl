@@ -37,6 +37,34 @@ library Paint
 		[default] dispinterface IPaint;
 	};
 
+
+	//  Primary dispatch interface for CMyPaintView
+	
+	[ uuid(50224767-87DB-4E0E-A4B5-5AF0E20D00AF) ]
+	dispinterface IMyPaintView
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CMyPaintView)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CMyPaintView)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CMyPaintView
+
+	[ uuid(789939CB-A3E6-458B-8DAE-9B5D43D5D71F) ]
+	coclass MyPaintView
+	{
+		[default] dispinterface IMyPaintView;
+	};
+
 	//{{AFX_APPEND_ODL}}
 	//}}AFX_APPEND_ODL}}
 };

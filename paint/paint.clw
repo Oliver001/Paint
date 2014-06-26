@@ -2,23 +2,24 @@
 
 [General Info]
 Version=1
-LastClass=CAboutDlg
-LastTemplate=CDialog
+LastClass=CMyPaintView
+LastTemplate=CScrollView
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "paint.h"
 ODLFile=paint.odl
 LastPage=0
 
-ClassCount=9
+ClassCount=6
 Class1=CPaintApp
 Class2=CPaintDoc
 Class3=CPaintView
 Class4=CMainFrame
-Class9=CAboutDlg
 
-ResourceCount=7
-Resource1=IDD_ABOUTBOX
-Resource2=IDR_MAINFRAME
+ResourceCount=2
+Resource1=IDR_MAINFRAME
+Class5=CAboutDlg
+Class6=CMyPaintView
+Resource2=IDD_ABOUTBOX
 
 [CLS:CPaintApp]
 Type=0
@@ -37,6 +38,8 @@ Type=0
 HeaderFile=paintView.h
 ImplementationFile=paintView.cpp
 Filter=C
+BaseClass=CView
+VirtualFilter=VWC
 
 
 [CLS:CMainFrame]
@@ -53,6 +56,7 @@ Type=0
 HeaderFile=paint.cpp
 ImplementationFile=paint.cpp
 Filter=D
+LastObject=IDOK
 
 [DLG:IDD_ABOUTBOX]
 Type=1
@@ -105,6 +109,7 @@ CommandCount=14
 
 [TB:IDR_MAINFRAME]
 Type=1
+Class=?
 Command1=ID_FILE_NEW
 Command2=ID_FILE_OPEN
 Command3=ID_FILE_SAVE
@@ -114,4 +119,13 @@ Command6=ID_EDIT_PASTE
 Command7=ID_FILE_PRINT
 Command8=ID_APP_ABOUT
 CommandCount=8
+
+[CLS:CMyPaintView]
+Type=0
+HeaderFile=MyPaintView.h
+ImplementationFile=MyPaintView.cpp
+BaseClass=CScrollView
+Filter=C
+LastObject=CMyPaintView
+VirtualFilter=VWC
 

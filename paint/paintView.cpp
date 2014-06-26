@@ -20,8 +20,7 @@ IMPLEMENT_DYNCREATE(CPaintView, CView)
 
 BEGIN_MESSAGE_MAP(CPaintView, CView)
 	//{{AFX_MSG_MAP(CPaintView)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	ON_WM_MOUSEMOVE()
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -40,6 +39,7 @@ CPaintView::CPaintView()
 
 CPaintView::~CPaintView()
 {
+	m_pDocument=pOldDoc;
 }
 
 BOOL CPaintView::PreCreateWindow(CREATESTRUCT& cs)
@@ -102,3 +102,26 @@ CPaintDoc* CPaintView::GetDocument() // non-debug version is inline
 
 /////////////////////////////////////////////////////////////////////////////
 // CPaintView message handlers
+
+void CPaintView::SetDocument(CPaintDoc *pDoc)
+{
+	pOldDoc = m_pDocument;
+	m_pDocument = pDoc;
+}
+
+void CPaintView::OnMouseMove(UINT nFlags, CPoint point) 
+{
+	// TODO: Add your message handler code here and/or call default
+	CString strPosition;
+	CStatusBar* pStatus = (CStatusBar*)AfxGetApp()->m_pMainWnd->GetDescendantWindow(ID_VIEW_STATUS_BAR);
+	if (pStatus)
+	{
+		CPoint point;
+		GetCursorPos(&point);
+		strPosition.Format("X:%d",point.x);
+		pStatus->SetPaneText(1,strPosition);
+		strPosition.Format("Y:%d",point.y);
+		pStatus->SetPaneText(2,strPosition);
+	}
+	CView::OnMouseMove(nFlags, point);
+}

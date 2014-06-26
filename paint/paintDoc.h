@@ -32,6 +32,8 @@ public:
 
 // Implementation
 public:
+	UINT m_cavasH;
+	UINT m_cavasW;
 	virtual ~CPaintDoc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;

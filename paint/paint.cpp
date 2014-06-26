@@ -1,12 +1,13 @@
 // paint.cpp : Defines the class behaviors for the application.
 //
-
+#include <vld.h>
 #include "stdafx.h"
 #include "paint.h"
 
 #include "MainFrm.h"
 #include "paintDoc.h"
 #include "paintView.h"
+#include "MyPaintView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -91,7 +92,12 @@ BOOL CPaintApp::InitInstance()
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CPaintDoc),
 		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CPaintView));
+		RUNTIME_CLASS(CMyPaintView));
+	//////////////////////////////////////////////////////////////////////////
+	//在此处将view换成了CMyPaintView,通过
+	//
+	//
+	//////////////////////////////////////////////////////////////////////////
 	AddDocTemplate(pDocTemplate);
 
 	// Connect the COleTemplateServer to the document template.
@@ -101,7 +107,8 @@ BOOL CPaintApp::InitInstance()
 	m_server.ConnectTemplate(clsid, pDocTemplate, TRUE);
 		// Note: SDI applications register server objects only if /Embedding
 		//   or /Automation is present on the command line.
-
+	EnableShellOpen();
+	RegisterShellFileTypes(TRUE);
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -128,8 +135,11 @@ BOOL CPaintApp::InitInstance()
 		return FALSE;
 
 	// The one and only window has been initialized, so show and update it.
-	m_pMainWnd->ShowWindow(SW_SHOW);
+	m_pMainWnd->ShowWindow(SW_MAXIMIZE);
 	m_pMainWnd->UpdateWindow();
+
+
+	m_pMainWnd->DragAcceptFiles(); 
 
 	return TRUE;
 }
