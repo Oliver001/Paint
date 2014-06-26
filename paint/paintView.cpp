@@ -57,6 +57,28 @@ void CPaintView::OnDraw(CDC* pDC)
 {
 	CPaintDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
+
+	CRect rect;
+	GetClientRect(&rect);
+	int i;
+
+	CPen pen(PS_DOT,1,RGB(128,128,128));
+	CPen* oldPen = pDC->SelectObject(&pen);
+
+	for (i = 10;i<rect.Height();i+=10)
+	{
+		pDC->MoveTo(0,i);
+		pDC->LineTo(rect.Width(),i);
+	}
+
+	for (i = 10;i<rect.Width();i+=10)
+	{
+		pDC->MoveTo(i,0);
+		pDC->LineTo(i,rect.Height());
+	}
+
+	pDC->SelectObject(oldPen);
+	pen.DeleteObject();
 	// TODO: add draw code for native data here
 }
 
