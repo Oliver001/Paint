@@ -10,6 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include "paintDoc.h"
+#include "Shape.h"	// Added by ClassView
 
 class CPaintView : public CView
 {
@@ -39,6 +40,7 @@ public:
 
 // Implementation
 public:
+	CShape* m_shape;
 	virtual ~CPaintView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -51,6 +53,9 @@ protected:
 protected:
 	//{{AFX_MSG(CPaintView)
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

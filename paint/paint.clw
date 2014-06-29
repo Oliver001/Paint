@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CMyPaintView
+LastClass=CPaintDoc
 LastTemplate=CScrollView
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "paint.h"
@@ -15,11 +15,14 @@ Class2=CPaintDoc
 Class3=CPaintView
 Class4=CMainFrame
 
-ResourceCount=2
-Resource1=IDR_MAINFRAME
+ResourceCount=5
+Resource1=IDR_GEOMTRANSBAR
 Class5=CAboutDlg
 Class6=CMyPaintView
-Resource2=IDD_ABOUTBOX
+Resource2=IDR_MAINFRAME
+Resource3=IDR_FILTERBAR
+Resource4=IDD_ABOUTBOX
+Resource5=IDR_DRAWBAR
 
 [CLS:CPaintApp]
 Type=0
@@ -32,6 +35,9 @@ Type=0
 HeaderFile=paintDoc.h
 ImplementationFile=paintDoc.cpp
 Filter=N
+BaseClass=CDocument
+VirtualFilter=DC
+LastObject=IDM_FIVEANGLE
 
 [CLS:CPaintView]
 Type=0
@@ -47,6 +53,9 @@ Type=0
 HeaderFile=MainFrm.h
 ImplementationFile=MainFrm.cpp
 Filter=T
+LastObject=IDM_LINE
+BaseClass=CFrameWnd
+VirtualFilter=fWC
 
 
 
@@ -138,7 +147,7 @@ CommandCount=7
 
 [TB:IDR_DRAWBAR]
 Type=1
-Class=?
+Class=CPaintDoc
 Command1=ID_SELECTSHAPE
 Command2=ID_DRAWLINE
 Command3=ID_DRAWCIRCLE
@@ -165,6 +174,7 @@ CommandCount=11
 
 [TB:IDR_FILTERBAR]
 Type=1
+Class=?
 Command1=ID_BACKWARD
 Command2=ID_BUTTON32816
 Command3=ID_BUTTON32818
@@ -181,6 +191,6 @@ HeaderFile=MyPaintView.h
 ImplementationFile=MyPaintView.cpp
 BaseClass=CScrollView
 Filter=C
-LastObject=CMyPaintView
+LastObject=ID_SELECTSHAPE
 VirtualFilter=VWC
 

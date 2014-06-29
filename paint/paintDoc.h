@@ -33,6 +33,8 @@ public:
 
 // Implementation
 public:
+	CShape* NewShape();
+	
 	DrawType m_DrawType;
 	COLORREF clr;
 	int m_nLineStyle;
@@ -40,6 +42,7 @@ public:
 	UINT m_cavasH;
 	UINT m_cavasW;
 	virtual ~CPaintDoc();
+	
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -50,8 +53,16 @@ protected:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CPaintDoc)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	afx_msg void OnLine();
+	afx_msg void OnRectangle();
+	afx_msg void OnTriangle();
+	afx_msg void OnFiveangle();
+	afx_msg void OnCircle();
+	afx_msg void OnUpdateLine(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateTriangle(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateRectangle(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateCircle(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateFiveangle(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

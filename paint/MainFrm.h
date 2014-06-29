@@ -44,11 +44,6 @@ protected:  // control bar embedded members
 protected:
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnLine();
-	afx_msg void OnRectangle();
-	afx_msg void OnTriangle();
-	afx_msg void OnCircle();
-	afx_msg void OnFiveangle();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

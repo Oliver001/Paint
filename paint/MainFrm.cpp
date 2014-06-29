@@ -20,11 +20,6 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
-	ON_COMMAND(IDM_LINE, OnLine)
-	ON_COMMAND(IDM_RECTANGLE, OnRectangle)
-	ON_COMMAND(IDM_TRIANGLE, OnTriangle)
-	ON_COMMAND(IDM_CIRCLE, OnCircle)
-	ON_COMMAND(IDM_FIVEANGLE, OnFiveangle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -123,34 +118,3 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
-
-
-void CMainFrame::OnLine() 
-{
-	// TODO: Add your command handler code here
-	
-}
-
-void CMainFrame::OnRectangle() 
-{
-	// TODO: Add your command handler code here
-	
-}
-
-void CMainFrame::OnTriangle() 
-{
-	// TODO: Add your command handler code here
-	
-}
-
-void CMainFrame::OnCircle() 
-{
-	// TODO: Add your command handler code here
-	
-}
-
-void CMainFrame::OnFiveangle() 
-{
-	// TODO: Add your command handler code here
-	
-}

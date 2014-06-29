@@ -19,8 +19,16 @@ IMPLEMENT_DYNCREATE(CPaintDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CPaintDoc, CDocument)
 	//{{AFX_MSG_MAP(CPaintDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	ON_COMMAND(IDM_LINE, OnLine)
+	ON_COMMAND(IDM_RECTANGLE, OnRectangle)
+	ON_COMMAND(IDM_TRIANGLE, OnTriangle)
+	ON_COMMAND(IDM_FIVEANGLE, OnFiveangle)
+	ON_COMMAND(IDM_CIRCLE, OnCircle)
+	ON_UPDATE_COMMAND_UI(IDM_LINE, OnUpdateLine)
+	ON_UPDATE_COMMAND_UI(IDM_TRIANGLE, OnUpdateTriangle)
+	ON_UPDATE_COMMAND_UI(IDM_RECTANGLE, OnUpdateRectangle)
+	ON_UPDATE_COMMAND_UI(IDM_CIRCLE, OnUpdateCircle)
+	ON_UPDATE_COMMAND_UI(IDM_FIVEANGLE, OnUpdateFiveangle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -46,9 +54,10 @@ END_INTERFACE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CPaintDoc construction/destruction
 
-CPaintDoc::CPaintDoc():
-m_cavasH(300),
-m_cavasW(600)
+CPaintDoc::CPaintDoc()
+: m_cavasH(300)
+, m_cavasW(600)
+, m_DrawType(LINE)
 {
 	// TODO: add one-time construction code here
 
@@ -107,3 +116,89 @@ void CPaintDoc::Dump(CDumpContext& dc) const
 
 /////////////////////////////////////////////////////////////////////////////
 // CPaintDoc commands
+
+void CPaintDoc::OnLine() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = LINE;
+}
+
+void CPaintDoc::OnRectangle() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = RECTANGLE;
+}
+
+void CPaintDoc::OnTriangle() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = TRIANGLE;
+	
+}
+
+void CPaintDoc::OnFiveangle() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = FIVEANGLE;
+}
+
+void CPaintDoc::OnCircle() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = CIRCLE;
+}
+
+void CPaintDoc::OnUpdateLine(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->SetCheck(LINE == m_DrawType);
+}
+
+void CPaintDoc::OnUpdateTriangle(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+		pCmdUI->SetCheck(TRIANGLE == m_DrawType);
+}
+
+void CPaintDoc::OnUpdateRectangle(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+		pCmdUI->SetCheck(RECTANGLE == m_DrawType);
+}
+
+void CPaintDoc::OnUpdateCircle(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+		pCmdUI->SetCheck(CIRCLE == m_DrawType);
+}
+
+void CPaintDoc::OnUpdateFiveangle(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+		pCmdUI->SetCheck(FIVEANGLE == m_DrawType);
+}
+
+CShape* CPaintDoc::NewShape()
+{
+	CShape* shape;
+	switch (m_DrawType)
+	{
+	case LINE:
+		shape = new CShape();
+		break;
+	case CIRCLE:
+		break;
+	case TRIANGLE:
+		break;
+	case RECTANGLE:
+		break;
+	case FIVEANGLE:
+		break;
+	}
+
+	shape->m_color  = clr;
+	shape->m_nPenStyle = m_nLineStyle;
+	shape->m_nPenWidth = m_nLineWidth;
+	shape->m_bSelected = true;
+	return shape;
+}

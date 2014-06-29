@@ -15,7 +15,7 @@
 #include <afxplex_.h>
 #include <afxtempl.h>
 #include "MyTracker.h"
-enum DrawType{LINE,CIRCLE,RACTANGLE,ECLLIPSE,FIVE};
+enum DrawType{LINE,CIRCLE,RECTANGLE,TRIANGLE,FIVEANGLE,SELECT};
 
 class CShape : public CObject  
 {
@@ -43,7 +43,7 @@ public:
 	int m_nPenStyle;
 	int m_nPenWidth;
 	int m_nDrawType;
-	BOOL m_bSelected;
+	bool m_bSelected;
 	CArray<CPoint, CPoint> m_points;
 	CMyTracker m_tracker;
 };
