@@ -6,9 +6,7 @@
 #define IDP_OLE_INIT_FAILED             100
 #define IDR_MAINFRAME                   128
 #define IDR_PAINTTYPE                   129
-#define ID_INDICATOR_CUR_POSITION_X     61446
 #define IDR_DRAWBAR                     130
-#define ID_INDICATOR_CUR_POSITION_Y     61447
 #define IDR_GEOMTRANSBAR                132
 #define IDR_FILTERBAR                   135
 #define ID_SELECTSHAPE                  32771
@@ -60,6 +58,8 @@
 #define ID_BUTTON32822                  32822
 #define ID_BUTTON32823                  32823
 #define ID_BUTTON32824                  32824
+#define ID_INDICATOR_CUR_POSITION_X     61446
+#define ID_INDICATOR_CUR_POSITION_Y     61447
 
 // Next default values for new objects
 // 
@@ -67,7 +67,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        137
-#define _APS_NEXT_COMMAND_VALUE         32825
+#define _APS_NEXT_COMMAND_VALUE         32826
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

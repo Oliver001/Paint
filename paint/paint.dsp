@@ -127,6 +127,10 @@ SOURCE=.\Shape.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeLine.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -165,6 +169,10 @@ SOURCE=.\Resource.h
 # Begin Source File
 
 SOURCE=.\Shape.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeLine.h
 # End Source File
 # Begin Source File
 

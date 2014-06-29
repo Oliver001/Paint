@@ -22,22 +22,12 @@ class CShape : public CObject
 public:
 	CShape();
 	virtual ~CShape();
-
-// 	virtual BOOL IsHightLight();
-// 	virtual void SetHighLight(BOOL bHL);
-
-
-
-
-
-// 	virtual void _Draw(CDC *pDC);
-
 public:
 	virtual void SetCurrentPoint(CPoint point);
 	virtual void ReDrawStroke(CDC *pDC, CPoint point);
 	virtual BOOL IsPointIn(const CPoint &point);
 	virtual void DrawStroke(CDC *pDC);
-	virtual void  Move(int x, int y);
+	virtual void Move(int x, int y);
 	virtual void ReSize(CRect newPos);
 	COLORREF m_color;
 	int m_nPenStyle;

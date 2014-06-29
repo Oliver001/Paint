@@ -67,7 +67,7 @@ void CShape::DrawStroke(CDC *pDC)
 
 	if(m_bSelected && m_points.GetSize() == 2)
 	{
-		m_tracker.m_nStyle = CRectTracker::resizeOutside|CRectTracker::solidLine;
+		m_tracker.m_nStyle = CRectTracker::resizeOutside;
 		m_tracker.m_rect.SetRect(m_points.GetAt(0), m_points.GetAt(1));
 		m_tracker.m_rect.NormalizeRect();
 		m_tracker.Draw(pDC);
@@ -83,18 +83,18 @@ BOOL CShape::IsPointIn(const CPoint &point)
 
 void CShape::ReDrawStroke(CDC *pDC, CPoint point)
 {
-// 	if(m_points.GetSize() < 2){
-// 		if(m_points.GetSize() == 1){
-// 			m_points.Add(point);
-// 			DrawStroke(pDC);
-// 		}
-// 		return ;
-// 	}
-// 	pDC->SetROP2(R2_NOTXORPEN);
-// 	
-// 	DrawStroke(pDC);
-// 	SetCurrentPoint(point);
-// 	DrawStroke(pDC);
+	if(m_points.GetSize() < 2){
+		if(m_points.GetSize() == 1){
+			m_points.Add(point);
+			DrawStroke(pDC);
+		}
+		return ;
+	}
+	pDC->SetROP2(R2_NOTXORPEN);
+	
+	DrawStroke(pDC);
+	SetCurrentPoint(point);
+	DrawStroke(pDC);
 }
 
 void CShape::SetCurrentPoint(CPoint point)

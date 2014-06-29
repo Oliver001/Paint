@@ -16,13 +16,13 @@ Class3=CPaintView
 Class4=CMainFrame
 
 ResourceCount=5
-Resource1=IDR_GEOMTRANSBAR
+Resource1=IDR_DRAWBAR
 Class5=CAboutDlg
 Class6=CMyPaintView
-Resource2=IDR_MAINFRAME
-Resource3=IDR_FILTERBAR
+Resource2=IDR_FILTERBAR
+Resource3=IDR_GEOMTRANSBAR
 Resource4=IDD_ABOUTBOX
-Resource5=IDR_DRAWBAR
+Resource5=IDR_MAINFRAME
 
 [CLS:CPaintApp]
 Type=0
@@ -37,7 +37,7 @@ ImplementationFile=paintDoc.cpp
 Filter=N
 BaseClass=CDocument
 VirtualFilter=DC
-LastObject=IDM_FIVEANGLE
+LastObject=CPaintDoc
 
 [CLS:CPaintView]
 Type=0

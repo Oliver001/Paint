@@ -6,7 +6,6 @@
 
 #include "paintDoc.h"
 #include "paintView.h"
-#include "Shape.h"
 
 
 #ifdef _DEBUG
@@ -144,50 +143,26 @@ void CPaintView::SetDocument(CPaintDoc *pDoc)
 void CPaintView::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-// 	CString strPosition;
-// 	CStatusBar* pStatus = (CStatusBar*)AfxGetApp()->m_pMainWnd->GetDescendantWindow(ID_VIEW_STATUS_BAR);
-// 	if (pStatus)
-// 	{
-// 		CPoint point;
-// 		GetCursorPos(&point);
-// 		strPosition.Format("X:%d",point.x);
-// 		pStatus->SetPaneText(1,strPosition);
-// 		strPosition.Format("Y:%d",point.y);
-// 		pStatus->SetPaneText(2,strPosition);
-// 	}
-// 	
-// 	CDC *pDC = GetDC();
-// 	OnPrepareDC(pDC);
-// 	pDC->DPtoLP(&point);
-// 	
-// 	//state1: ??????,??
-// // 	if(GetCapture() == this){
-// // 		m_stroke->ReDrawStroke(pDC, point);
-// // 	}
-// // 	//state2: ?????,??
-// // 	else{	
-// 		bool refresh = false;
-// 		for(int i = 0; i < GetDocument()->m_strokeList.GetSize(); i ++)
-// 		{
-// 			if(GetDocument()->m_strokeList.GetAt(i)->IsPointIn(point)){
-// 				//????
-// 				SetCursor(LoadCursor(NULL, IDC_ARROW));
-// 				//if state changed from NOT selected to selected
-// 				if(!GetDocument()->m_strokeList.GetAt(i)->IsHightLight())
-// 					refresh = true;
-// 				GetDocument()->m_strokeList.GetAt(i)->SetHighLight(TRUE);
-// 			}
-// 			else{
-// 				//if state changed from selected to NOT selected
-// 				if(GetDocument()->m_strokeList.GetAt(i)->IsHightLight())
-// 					refresh = true;
-// 				GetDocument()->m_strokeList.GetAt(i)->SetHighLight(FALSE);
-// 			}
-// 		}
-// 		if(refresh)
-// 			Invalidate();
-// //	}
-// 	ReleaseDC(pDC);
+	CString strPosition;
+	CStatusBar* pStatus = (CStatusBar*)AfxGetApp()->m_pMainWnd->GetDescendantWindow(ID_VIEW_STATUS_BAR);
+	if (pStatus)
+	{
+		CPoint point;
+		GetCursorPos(&point);
+		strPosition.Format("X:%d",point.x);
+		pStatus->SetPaneText(1,strPosition);
+		strPosition.Format("Y:%d",point.y);
+		pStatus->SetPaneText(2,strPosition);
+	}
+	if(GetCapture() == this)
+	{
+		CDC *pDC = GetDC();
+		OnPrepareDC(pDC);
+		pDC->DPtoLP(&point);
+ 		m_shape->ReDrawStroke(pDC, point);
+		ReleaseDC(pDC);
+	//	Invalidate();
+ 	}
 
 	CView::OnMouseMove(nFlags, point);
 }
@@ -205,6 +180,9 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		if (m_shape->IsPointIn(point))
 		{
+			//修改鼠标样式，，
+			//移动所绘制图形的样式
+			//
 			return;
 		}
 		else
@@ -216,67 +194,16 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 			return;
 		}
 	}
-
 	SetCapture();
 	if (m_shape == NULL)
 	{
 		m_shape = pDoc->NewShape();
-		
 		m_shape->SetCurrentPoint(point);
 		m_shape->m_bSelected = true;
-
 		pDoc->SetModifiedFlag();
-	}
-		
+	}	
 	ReleaseDC(pDC);	
-	
 	Invalidate();
-// 	CDC* pDC = GetDC();
-// 	OnPrepareDC(pDC);
-// 	pDC->DPtoLP(&point);
-// 	
-// 	CPaintDoc* pDoc = GetDocument();
-// 	BOOL refresh = FALSE, bTrack = false, ctrlPressed = nFlags & MK_CONTROL;
-//	int i;
-// 	//??Ctrl, Track
-// 	
-// 	for(i = 0; i < pDoc->m_strokeList.GetSize(); i ++){
-// 		if(pDoc->m_strokeList.GetAt(i)->IsPointIn(point)){
-// 			//??1. ??,Ctrl??,???????
-// 			if(ctrlPressed){
-// 				//select/deselect
-// 				pDoc->m_strokeList.GetAt(i)->m_bSelected = 
-// 					!pDoc->m_strokeList.GetAt(i)->m_bSelected;
-// 			}
-// 			//??2. ??,??Ctrl,??
-// 			else{
-// 				//select
-// 				pDoc->m_strokeList.GetAt(i)->m_bSelected = true;
-// 			}
-// 			refresh = true;
-// 		}
-// 		//??3. ????,??Ctrl,????
-// 		else if(!ctrlPressed)
-// 			pDoc->m_strokeList.GetAt(i)->m_bSelected = false;
-// 	}
-// 	if(refresh){
-// 		Invalidate();
-// 	}
-// 	else{
-// 		//??
-// 		if(!bTrack && !ctrlPressed){
-// 			//Step1. ????
-// 			SetCapture();
-// 			//Step2. ?????
-// 			m_stroke = pDoc->NewStroke();
-// 			//Step3. ????
-// 			m_stroke->SetCurrentPoint(point);
-// 			//Step4. ??????????
-// 			pDoc->SetModifiedFlag();
-// 		}
-//	}
-	
-//	ReleaseDC(pDC);
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -285,12 +212,10 @@ void CPaintView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 	if(GetCapture() == this){
-		CPaintDoc *pDoc = GetDocument();
-		
+		CPaintDoc *pDoc = GetDocument();		
 		CDC *pDC = GetDC();
 		OnPrepareDC(pDC);
 		pDC->DPtoLP(&point);
-		
 		//Step0.1 点下就松开，不绘制
 		if(m_shape->m_points.GetSize() == 1){
 			delete m_shape;
@@ -316,13 +241,10 @@ void CPaintView::OnLButtonUp(UINT nFlags, CPoint point)
 		else{
 			//Step1. 加入新点
 			m_shape->SetCurrentPoint(point);
-		
 		}
-		//Step2. 释放捕获
+		
 		ReleaseCapture();
 		ReleaseDC(pDC);
-		
-		//Step3. 全部重绘
 		Invalidate();
 	}	
 	CView::OnLButtonUp(nFlags, point);

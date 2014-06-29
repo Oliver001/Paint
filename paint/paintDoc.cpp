@@ -5,6 +5,9 @@
 #include "paint.h"
 
 #include "paintDoc.h"
+#include "ShapeLine.h"
+#include "shape.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,6 +61,9 @@ CPaintDoc::CPaintDoc()
 : m_cavasH(300)
 , m_cavasW(600)
 , m_DrawType(LINE)
+, m_nLineStyle(PS_SOLID)
+, m_nLineWidth(2)
+, clr(RGB(0,0,0))
 {
 	// TODO: add one-time construction code here
 
@@ -184,7 +190,10 @@ CShape* CPaintDoc::NewShape()
 	switch (m_DrawType)
 	{
 	case LINE:
-		shape = new CShape();
+		shape = new CShapeLine();
+		shape->m_nPenWidth = m_nLineWidth;
+		shape->m_nPenStyle = m_nLineStyle;
+		shape->m_color = clr;
 		break;
 	case CIRCLE:
 		break;
