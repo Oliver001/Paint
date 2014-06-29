@@ -8,6 +8,7 @@
 //
 #include "paintView.h"
 #include <afxext.h>
+#include "MyTracker.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMyPaintView view
 
@@ -23,7 +24,7 @@ public:
 
 protected:
 	CPaintView* m_paintView;
-	CRectTracker m_rectTracker;
+	CMyTracker m_rectTracker;
 // Operations
 public:
 	CPaintDoc* GetDocument();

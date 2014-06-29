@@ -19,9 +19,12 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
 	ON_WM_CREATE()
+	ON_COMMAND(IDM_LINE, OnLine)
+	ON_COMMAND(IDM_RECTANGLE, OnRectangle)
+	ON_COMMAND(IDM_TRIANGLE, OnTriangle)
+	ON_COMMAND(IDM_CIRCLE, OnCircle)
+	ON_COMMAND(IDM_FIVEANGLE, OnFiveangle)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -54,8 +57,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC| CBRS_FLOAT_MULTI) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
+	{
+		TRACE0("Failed to create toolbar\n");
+		return -1;      // fail to create
+	}
+
+	
+	if (!m_paintToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_LEFT
+		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC | CBRS_FLOAT_MULTI) ||
+		!m_paintToolBar.LoadToolBar(IDR_DRAWBAR))
 	{
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
@@ -75,6 +87,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
 
+	m_paintToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	DockControlBar(&m_paintToolBar);
 	return 0;
 }
 
@@ -110,3 +124,33 @@ void CMainFrame::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
 
+
+void CMainFrame::OnLine() 
+{
+	// TODO: Add your command handler code here
+	
+}
+
+void CMainFrame::OnRectangle() 
+{
+	// TODO: Add your command handler code here
+	
+}
+
+void CMainFrame::OnTriangle() 
+{
+	// TODO: Add your command handler code here
+	
+}
+
+void CMainFrame::OnCircle() 
+{
+	// TODO: Add your command handler code here
+	
+}
+
+void CMainFrame::OnFiveangle() 
+{
+	// TODO: Add your command handler code here
+	
+}

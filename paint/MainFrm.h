@@ -39,13 +39,16 @@ public:
 protected:  // control bar embedded members
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;
-
+	CToolBar	m_paintToolBar;	
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	afx_msg void OnLine();
+	afx_msg void OnRectangle();
+	afx_msg void OnTriangle();
+	afx_msg void OnCircle();
+	afx_msg void OnFiveangle();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -5,6 +5,7 @@
 #if !defined(AFX_PAINTDOC_H__941F44C9_2BF0_44DF_B917_EC7A2BB77D28__INCLUDED_)
 #define AFX_PAINTDOC_H__941F44C9_2BF0_44DF_B917_EC7A2BB77D28__INCLUDED_
 
+#include "Shape.h"	// Added by ClassView
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -32,6 +33,10 @@ public:
 
 // Implementation
 public:
+	DrawType m_DrawType;
+	COLORREF clr;
+	int m_nLineStyle;
+	int m_nLineWidth;
 	UINT m_cavasH;
 	UINT m_cavasW;
 	virtual ~CPaintDoc();

@@ -86,8 +86,6 @@ void CMyPaintView::OnDraw(CDC* pDC)
 	CDocument* pDoc = GetDocument();
 	// TODO: add draw code here
 	m_rectTracker.Draw(pDC);
-
-
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -235,9 +233,6 @@ void CMyPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 		//	GetDocument()->BackUp();//??
 			Invalidate();
 		}
-	default:
-	//	MessageBox(CString(hit));
-		break;
 	}
 	ReleaseDC(pDC);
 

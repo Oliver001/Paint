@@ -98,6 +98,10 @@ SOURCE=.\MyPaintView.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MyTracker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\paint.cpp
 # End Source File
 # Begin Source File
@@ -118,6 +122,10 @@ SOURCE=.\paintView.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Shape.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -135,6 +143,10 @@ SOURCE=.\MyPaintView.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\paint201406\paint\MyTracker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\paint.h
 # End Source File
 # Begin Source File
@@ -148,6 +160,10 @@ SOURCE=.\paintView.h
 # Begin Source File
 
 SOURCE=.\Resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\paint201406\paint\Shape.h
 # End Source File
 # Begin Source File
 
