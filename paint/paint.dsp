@@ -91,6 +91,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Filter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -138,6 +142,10 @@ SOURCE=.\StdAfx.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Filter.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\MainFrm.h
@@ -209,6 +217,10 @@ SOURCE=.\res\toolbar1.bmp
 # Begin Source File
 
 SOURCE=.\res\toolbar2.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\weitu.bmp
 # End Source File
 # End Group
 # Begin Source File

@@ -58,15 +58,14 @@ END_INTERFACE_MAP()
 // CPaintDoc construction/destruction
 
 CPaintDoc::CPaintDoc()
-: m_cavasH(300)
-, m_cavasW(600)
+: m_cavasH(600)
+, m_cavasW(800)
 , m_DrawType(LINE)
 , m_nLineStyle(PS_SOLID)
 , m_nLineWidth(2)
 , clr(RGB(0,0,0))
 {
 	// TODO: add one-time construction code here
-
 	EnableAutomation();
 
 	AfxOleLockApp();

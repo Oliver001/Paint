@@ -9,6 +9,7 @@
 #define IDR_DRAWBAR                     130
 #define IDR_GEOMTRANSBAR                132
 #define IDR_FILTERBAR                   135
+#define IDB_BG                          137
 #define ID_SELECTSHAPE                  32771
 #define ID_DRAWLINE                     32772
 #define ID_DRAWCIRCLE                   32773
@@ -66,7 +67,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        137
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32826
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101

@@ -11,6 +11,7 @@
 
 #include "paintDoc.h"
 #include "Shape.h"	// Added by ClassView
+#include "Filter.h"
 
 class CPaintView : public CView
 {
@@ -23,15 +24,20 @@ public:
 	CPaintDoc* GetDocument();
 	void SetDocument(CPaintDoc *pDoc);
 	CDocument *pOldDoc;
+	CBitmap bitmap;
+	CFilter fil;
+	BITMAP bmp;
+    int x,y;
 // Operations
 public:
-
+	CDC* MyDC;
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPaintView)
 	public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual void OnInitialUpdate();
 	protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -56,6 +62,14 @@ protected:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnBackward();
+	afx_msg void OnExposure();
+	afx_msg void OnNeonred();
+	afx_msg void OnRelief();
+	afx_msg void OnSharpen();
+	afx_msg void OnSleek();
+	afx_msg void OnInlay();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

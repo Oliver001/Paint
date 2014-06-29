@@ -16,13 +16,13 @@ Class3=CPaintView
 Class4=CMainFrame
 
 ResourceCount=5
-Resource1=IDR_DRAWBAR
+Resource1=IDR_GEOMTRANSBAR
 Class5=CAboutDlg
 Class6=CMyPaintView
-Resource2=IDR_FILTERBAR
-Resource3=IDR_GEOMTRANSBAR
-Resource4=IDD_ABOUTBOX
-Resource5=IDR_MAINFRAME
+Resource2=IDR_DRAWBAR
+Resource3=IDR_FILTERBAR
+Resource4=IDR_MAINFRAME
+Resource5=IDD_ABOUTBOX
 
 [CLS:CPaintApp]
 Type=0

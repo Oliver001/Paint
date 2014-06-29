@@ -9,7 +9,7 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-
+#include "Filter.h"
 
 class CPaintDoc : public CDocument
 {
@@ -19,7 +19,6 @@ protected: // create from serialization only
 
 // Attributes
 public:
-
 // Operations
 public:
 

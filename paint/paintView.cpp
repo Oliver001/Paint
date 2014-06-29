@@ -3,10 +3,9 @@
 
 #include "stdafx.h"
 #include "paint.h"
-
+#include "Filter.h"
 #include "paintDoc.h"
 #include "paintView.h"
-
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -21,6 +20,15 @@ IMPLEMENT_DYNCREATE(CPaintView, CView)
 
 BEGIN_MESSAGE_MAP(CPaintView, CView)
 	//{{AFX_MSG_MAP(CPaintView)
+	ON_WM_MOUSEMOVE()
+	ON_COMMAND(IDM_BACKWARD, OnBackward)
+	ON_COMMAND(IDM_EXPOSURE, OnExposure)
+	ON_COMMAND(IDM_NEONRED, OnNeonred)
+	ON_COMMAND(IDM_RELIEF, OnRelief)
+	ON_COMMAND(IDM_SHARPEN, OnSharpen)
+	ON_COMMAND(IDM_SLEEK, OnSleek)
+	ON_COMMAND(IDM_INLAY, OnInlay)
+	ON_WM_ERASEBKGND()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
@@ -39,6 +47,11 @@ CPaintView::CPaintView()
 {
 	// TODO: add construction code here
 	m_shape = NULL;
+	bitmap.LoadBitmap(IDB_BG);///¼ÓÔØÎ»Í¼
+	bitmap.GetBitmap(&bmp);
+    x = bmp.bmWidth;
+    y = bmp.bmHeight;
+
 }
 
 CPaintView::~CPaintView()
@@ -73,19 +86,18 @@ void CPaintView::OnDraw(CDC* pDC)
 
 	CPen pen(PS_DOT,1,RGB(128,128,128));
 	CPen* oldPen = pDC->SelectObject(&pen);
-
+	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
 	for (i = 10;i<rect.Height();i+=10)
 	{
 		pDC->MoveTo(0,i);
 		pDC->LineTo(rect.Width(),i);
 	}
-
+	
 	for (i = 10;i<rect.Width();i+=10)
 	{
 		pDC->MoveTo(i,0);
 		pDC->LineTo(i,rect.Height());
 	}
-
 	pDC->SelectObject(oldPen);
 	pen.DeleteObject();
 	// TODO: add draw code for native data here
@@ -159,14 +171,98 @@ void CPaintView::OnMouseMove(UINT nFlags, CPoint point)
 		CDC *pDC = GetDC();
 		OnPrepareDC(pDC);
 		pDC->DPtoLP(&point);
- 		m_shape->ReDrawStroke(pDC, point);
+		m_shape->ReDrawStroke(pDC, point);
 		ReleaseDC(pDC);
-	//	Invalidate();
- 	}
-
+		//	Invalidate();
+	}
+	
 	CView::OnMouseMove(nFlags, point);
 }
+void CPaintView::OnInitialUpdate() 
+{
+	CView::OnInitialUpdate();
+	BITMAP  bmp;
+	bitmap.GetBitmap(&bmp);
+	int x = bmp.bmWidth;
+	int y = bmp.bmHeight;
+	CDC* pDC=GetDC();
+	MyDC = new CDC();
+	MyDC->CreateCompatibleDC(pDC);
+// 
+// 	CBitmap bit;
+// 	bit.CreateCompatibleBitmap(pDC,x,y);
 
+//	MyDC->SelectObject(&bit);
+	MyDC->SelectObject(&bitmap);
+// 	
+// 	CPaintDoc* pDoc = GetDocument();
+// 	MyDC->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));
+	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+}
+
+void CPaintView::OnBackward() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Backward(MyDC,0,0,x,y);
+	
+		Invalidate();
+}
+void CPaintView::OnExposure() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Exposure(MyDC,0,0,x,y);
+	
+	Invalidate();
+}
+void CPaintView::OnNeonred() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Neonred(MyDC,0,0,x,y);
+	Invalidate();
+}
+
+void CPaintView::OnRelief() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Relief(MyDC,0,1,x,y);
+	Invalidate();
+}
+
+void CPaintView::OnSharpen() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Sharpen(MyDC,0,0,x,y);
+	Invalidate();
+}
+
+void CPaintView::OnSleek() 
+{
+	// TODO: Add your command handler code here
+
+	fil.Sleek(MyDC,0,0,x,y);
+	Invalidate();
+
+}
+
+void CPaintView::OnInlay() 
+{
+	// TODO: Add your command handler code here
+	
+	fil.Inlay(MyDC,0,0,x,y);
+	Invalidate();
+}
+
+BOOL CPaintView::OnEraseBkgnd(CDC* pDC) 
+{
+	// TODO: Add your message handler code here and/or call default
+	return FALSE;
+	return CView::OnEraseBkgnd(pDC);
+}
 void CPaintView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default

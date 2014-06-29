@@ -6,19 +6,19 @@
 --------------------Configuration: paint - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP318E.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5FA4.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/paint.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\Administrator\Desktop\paint\paintDoc.cpp"
-"C:\Users\Administrator\Desktop\paint\Shape.cpp"
-"C:\Users\Administrator\Desktop\paint\ShapeLine.cpp"
+"C:\Users\Administrator\Desktop\SVN\trunk\paint\paintView.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP318E.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP319E.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5FA4.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5FA5.tmp" with contents
 [
 /nologo /subsystem:windows /profile /debug /machine:I386 /out:"Debug/paint.exe" 
+.\Debug\Filter.obj
 .\Debug\MainFrm.obj
 .\Debug\MyPaintView.obj
+.\Debug\MyTracker.obj
 .\Debug\paint.obj
 .\Debug\paintDoc.obj
 .\Debug\paintView.obj
@@ -26,18 +26,13 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP319E.tmp" with 
 .\Debug\ShapeLine.obj
 .\Debug\StdAfx.obj
 .\Debug\paint.res
-.\Debug\MyTracker.obj
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP319E.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5FA5.tmp"
 <h3>Output Window</h3>
 Compiling...
-Shape.cpp
-ShapeLine.cpp
-Generating Code...
-Skipping... (no relevant changes detected)
-paintDoc.cpp
+paintView.cpp
 Linking...
-Creating command line "bscmake.exe /nologo /o"Debug/paint.bsc"  .\Debug\StdAfx.sbr .\Debug\MainFrm.sbr .\Debug\MyPaintView.sbr .\Debug\paint.sbr .\Debug\paintDoc.sbr .\Debug\paintView.sbr .\Debug\Shape.sbr .\Debug\ShapeLine.sbr .\Debug\MyTracker.sbr"
+Creating command line "bscmake.exe /nologo /o"Debug/paint.bsc"  .\Debug\StdAfx.sbr .\Debug\Filter.sbr .\Debug\MainFrm.sbr .\Debug\MyPaintView.sbr .\Debug\MyTracker.sbr .\Debug\paint.sbr .\Debug\paintDoc.sbr .\Debug\paintView.sbr .\Debug\Shape.sbr .\Debug\ShapeLine.sbr"
 Creating browse info file...
 <h3>Output Window</h3>
 
