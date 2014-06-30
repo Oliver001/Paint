@@ -90,7 +90,7 @@ void CShapeEllipse::Draw(CDC *pDC)
 	CPen *pOld, pNew; 
 	pNew.CreatePen(m_nPenStyle, m_nPenWidth, m_color);
 	pOld = pDC->SelectObject(&pNew);
-	pDC->SelectStockObject(NULL_BRUSH);
+//	pDC->SelectStockObject(NULL_BRUSH);
 	pDC->Ellipse(m_points[0].x,m_points[0].y,m_points[1].x,m_points[1].y);
 	
 	pDC->SelectObject(pOld);

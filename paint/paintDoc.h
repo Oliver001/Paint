@@ -62,6 +62,7 @@ protected:
 	afx_msg void OnUpdateRectangle(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateCircle(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateFiveangle(CCmdUI* pCmdUI);
+	afx_msg void OnSelectshape();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

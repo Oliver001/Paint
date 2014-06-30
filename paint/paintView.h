@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include <stack>
+using namespace std;
 #include "paintDoc.h"
 #include "Shape.h"	// Added by ClassView
 #include "Filter.h"
@@ -28,6 +30,7 @@ public:
 	CFilter fil;
 	BITMAP bmp;
     int x,y;
+	stack <CDC*> m_stack;
 // Operations
 public:
 	CDC* MyDC;
@@ -71,6 +74,8 @@ protected:
 	afx_msg void OnInlay();
 	afx_msg void OnDiffuse();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+	afx_msg void OnEditUndo();
+	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

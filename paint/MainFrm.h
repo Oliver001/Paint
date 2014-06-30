@@ -40,10 +40,19 @@ protected:  // control bar embedded members
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;
 	CToolBar	m_paintToolBar;	
+	CToolBar	m_FilterToolBar;
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnFontbar();
+	afx_msg void OnUpdateFontbar(CCmdUI* pCmdUI);
+	afx_msg void OnFilterbar();
+	afx_msg void OnUpdateFilterbar(CCmdUI* pCmdUI);
+	afx_msg void OnDrawbar();
+	afx_msg void OnUpdateDrawbar(CCmdUI* pCmdUI);
+	afx_msg void OnColorbar();
+	afx_msg void OnUpdateColorbar(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

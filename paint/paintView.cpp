@@ -32,8 +32,10 @@ BEGIN_MESSAGE_MAP(CPaintView, CView)
 	ON_COMMAND(IDM_SLEEK, OnSleek)
 	ON_COMMAND(IDM_INLAY, OnInlay)
 	ON_COMMAND(IDM_DIFFUSE, OnDiffuse)
-	ON_WM_MOUSEMOVE()
 	ON_WM_SETCURSOR()
+	ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
+	ON_WM_MOUSEMOVE()
+	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -62,6 +64,13 @@ CPaintView::~CPaintView()
 	if (m_shape)
 	{
 		delete m_shape;
+	}
+	while(!m_stack.empty())
+	{
+		CDC* dc = (CDC*)m_stack.top();
+		m_stack.pop();
+	
+		delete dc;
 	}
 }
 
@@ -193,24 +202,26 @@ void CPaintView::OnMouseMove(UINT nFlags, CPoint point)
 void CPaintView::OnInitialUpdate() 
 {
 	CView::OnInitialUpdate();
-	BITMAP  bmp;
-	bitmap.GetBitmap(&bmp);
-	int x = bmp.bmWidth;
-	int y = bmp.bmHeight;
 	CDC* pDC=GetDC();
 	MyDC = new CDC();
-	MyDC->CreateCompatibleDC(pDC);
-// 
-// 	CBitmap bit;
-// 	bit.CreateCompatibleBitmap(pDC,x,y);
+ 	MyDC->CreateCompatibleDC(pDC);
+// 	BITMAP  bmp;
+// 	bitmap.GetBitmap(&bmp);
+// 	int x = bmp.bmWidth;
+// 	int y = bmp.bmHeight;
 
-//	MyDC->SelectObject(&bit);
-	MyDC->SelectObject(&bitmap);
+// 	MyDC->SelectObject(&bitmap);
 
+	CPaintDoc* pDoc = GetDocument();
+	CBitmap MemBitmap;   
+	MemBitmap.CreateCompatibleBitmap(pDC,pDoc->m_cavasW,pDoc->m_cavasH);  
+	//将位图选入到内存设备描述表  
+	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
+	CBitmap *pOldBit=MyDC->SelectObject(&MemBitmap);  
+	//先用背景色将位图清除干净，这里我用的是白色作为背景  
+	//你也可以用自己应该用的颜色  
+	MyDC->FillSolidRect(0,0,800,600,RGB(255,255,255));
 
-// 	CPaintDoc* pDoc = GetDocument();
-// 	MyDC->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));
-//	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
 	ReleaseDC(pDC);
 }
 
@@ -274,6 +285,9 @@ void CPaintView::OnInlay()
 void CPaintView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
+	
+	//
+
 	CDC* pDC = GetDC();
 	OnPrepareDC(pDC);//设置DC的滚动属性，，与scrollview有关
 	pDC->DPtoLP(&point);//转换当前点为逻辑位置坐标
@@ -304,6 +318,22 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		else
 		{
+			
+			CPaintDoc* pDoc = GetDocument();
+			CDC* dc = new CDC();
+			dc->CreateCompatibleDC(pDC);
+			CBitmap MemBitmap;  
+			//建立与屏幕设备描述表（前端缓冲区）兼容的内存设备描述表句柄（后备缓冲区）   
+			MemBitmap.CreateCompatibleBitmap(pDC,pDoc->m_cavasW,pDoc->m_cavasH);  
+			//将位图选入到内存设备描述表  
+			//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
+			CBitmap *pOldBit=dc->SelectObject(&MemBitmap);  
+			//先用背景色将位图清除干净，这里我用的是白色作为背景  
+			//你也可以用自己应该用的颜色  
+			dc->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));  
+			dc->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+			m_stack.push(dc);
+
 			m_shape->Draw(MyDC);
 			delete m_shape;
 			m_shape = NULL;
@@ -380,7 +410,22 @@ void CPaintView::OnRButtonDown(UINT nFlags, CPoint point)
 			//////////////////////////////////////////////////////////////////////////
 		}
 		else
-		{
+		{	
+			CPaintDoc* pDoc = GetDocument();
+			CDC* dc = new CDC();
+			dc->CreateCompatibleDC(pDC);
+			CBitmap MemBitmap;  
+			//建立与屏幕设备描述表（前端缓冲区）兼容的内存设备描述表句柄（后备缓冲区）   
+			MemBitmap.CreateCompatibleBitmap(pDC,pDoc->m_cavasW,pDoc->m_cavasH);  
+			//将位图选入到内存设备描述表  
+			//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
+			CBitmap *pOldBit=dc->SelectObject(&MemBitmap);  
+			//先用背景色将位图清除干净，这里我用的是白色作为背景  
+			//你也可以用自己应该用的颜色  
+			dc->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));  
+			dc->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+			m_stack.push(dc);
+
 			m_shape->Draw(MyDC);
 			delete m_shape;
 			m_shape = NULL;
@@ -436,4 +481,32 @@ BOOL CPaintView::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 
 	return CView::OnSetCursor(pWnd, nHitTest, message);
+}
+
+void CPaintView::OnEditUndo() 
+{
+	// TODO: Add your command handler code here
+	if (m_shape && m_shape->m_bSelected)
+	{
+		delete m_shape;
+		m_shape = NULL;
+	}
+	else
+	{
+		if (!m_stack.empty())
+		{
+			CDC* dc = m_stack.top();
+			MyDC->BitBlt(0,0,x,y,dc,0,0,SRCCOPY);
+			m_stack.pop();
+			
+			delete dc;
+		}
+	}
+	Invalidate();
+}
+
+void CPaintView::OnUpdateEditUndo(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->Enable(!m_stack.empty());
 }

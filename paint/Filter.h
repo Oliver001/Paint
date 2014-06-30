@@ -12,6 +12,7 @@
 class CFilter  
 {
 public:
+	void Grey(CDC *pDC, int x1, int y1, int x2, int y2);
 	void Diffuse(CDC *pDC, int x1, int y1, int x2, int y2);
 	void Inlay(CDC *pDC, int x1, int y1, int x2, int y2);
 	void Relief(CDC *pDC, int x1, int y1, int x2, int y2);

@@ -171,7 +171,7 @@ BEGIN
     END
     POPUP "显示 ", CHECKED
     BEGIN
-        MENUITEM "显隐工具栏",                  ID_VIEW_TOOLBAR, CHECKED
+        MENUITEM "主工具栏",                    ID_VIEW_TOOLBAR, CHECKED
         MENUITEM "字体",                        IDM_FONTBAR, CHECKED
         MENUITEM "几何变换工具条",              IDM_GEOMTRANSBAR, CHECKED
         MENUITEM "滤镜工具条",                  IDM_FILTERBAR, CHECKED

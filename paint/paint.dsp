@@ -143,6 +143,10 @@ SOURCE=.\ShapeRect.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeSelect.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ShapeTriangle.cpp
 # End Source File
 # Begin Source File
@@ -205,6 +209,10 @@ SOURCE=.\ShapePentagon.h
 # Begin Source File
 
 SOURCE=.\ShapeRect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeSelect.h
 # End Source File
 # Begin Source File
 

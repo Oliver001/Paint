@@ -10,6 +10,7 @@
 #include "ShapeEllipse.h"
 #include "ShapePentagon.h"
 #include "ShapeTriangle.h"
+#include "ShapeSelect.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -34,6 +35,7 @@ BEGIN_MESSAGE_MAP(CPaintDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(IDM_RECTANGLE, OnUpdateRectangle)
 	ON_UPDATE_COMMAND_UI(IDM_CIRCLE, OnUpdateCircle)
 	ON_UPDATE_COMMAND_UI(IDM_FIVEANGLE, OnUpdateFiveangle)
+	ON_COMMAND(IDM_SELECTSHAPE, OnSelectshape)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -60,8 +62,8 @@ END_INTERFACE_MAP()
 // CPaintDoc construction/destruction
 
 CPaintDoc::CPaintDoc()
-: m_cavasH(600)
-, m_cavasW(800)
+: m_cavasH(300)
+, m_cavasW(400)
 , m_DrawType(LINE)
 , m_nLineStyle(PS_SOLID)
 , m_nLineWidth(2)
@@ -205,6 +207,8 @@ CShape* CPaintDoc::NewShape()
 	case FIVEANGLE:
 		shape = new CShapePentagon();
 		break;
+	case SELECT:
+		shape = new CShapeSelect();
 	}
 
 	shape->m_color  = clr;
@@ -212,4 +216,10 @@ CShape* CPaintDoc::NewShape()
 	shape->m_nPenWidth = m_nLineWidth;
 
 	return shape;
+}
+
+void CPaintDoc::OnSelectshape() 
+{
+	// TODO: Add your command handler code here
+	m_DrawType = SELECT;
 }

@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CPaintView
+LastClass=CPaintDoc
 LastTemplate=CScrollView
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "paint.h"
@@ -16,14 +16,14 @@ Class3=CPaintView
 Class4=CMainFrame
 
 ResourceCount=6
-Resource1=IDR_COLORBAR
+Resource1=IDR_FILTERBAR
 Class5=CAboutDlg
 Class6=CMyPaintView
-Resource2=IDR_FILTERBAR
-Resource3=IDR_DRAWBAR
-Resource4=IDR_GEOMTRANSBAR
-Resource5=IDD_ABOUTBOX
-Resource6=IDR_MAINFRAME
+Resource2=IDR_COLORBAR
+Resource3=IDR_GEOMTRANSBAR
+Resource4=IDR_DRAWBAR
+Resource5=IDR_MAINFRAME
+Resource6=IDD_ABOUTBOX
 
 [CLS:CPaintApp]
 Type=0
@@ -55,7 +55,7 @@ Type=0
 HeaderFile=MainFrm.h
 ImplementationFile=MainFrm.cpp
 Filter=T
-LastObject=IDM_DIFFUSE
+LastObject=IDM_SELECTSHAPE
 BaseClass=CFrameWnd
 VirtualFilter=fWC
 
