@@ -80,13 +80,14 @@ IDR_DRAWBAR             BITMAP  DISCARDABLE     "res\\toolbar1.bmp"
 IDR_GEOMTRANSBAR        BITMAP  DISCARDABLE     "res\\toolbar2.bmp"
 IDR_FILTERBAR           BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
 IDB_BG                  BITMAP  DISCARDABLE     "res\\weitu.bmp"
+IDR_COLORBAR            BITMAP  DISCARDABLE     "res\\bmp00002.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR DISCARDABLE  30, 30
+IDR_MAINFRAME TOOLBAR DISCARDABLE  30, 20
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -101,14 +102,14 @@ END
 
 IDR_DRAWBAR TOOLBAR DISCARDABLE  30, 30
 BEGIN
-    BUTTON      ID_SELECTSHAPE
-    BUTTON      ID_DRAWLINE
+    BUTTON      IDM_SELECTSHAPE
+    BUTTON      IDM_LINE
     SEPARATOR
-    BUTTON      ID_DRAWCIRCLE
-    BUTTON      ID_DRAWTRIANGLE
+    BUTTON      IDM_CIRCLE
+    BUTTON      IDM_TRIANGLE
     SEPARATOR
-    BUTTON      ID_DRAWRECTANGLE
-    BUTTON      ID_DRAWFIVEANGLE
+    BUTTON      IDM_RECTANGLE
+    BUTTON      IDM_FIVEANGLE
 END
 
 IDR_GEOMTRANSBAR TOOLBAR DISCARDABLE  30, 30
@@ -124,19 +125,24 @@ BEGIN
     BUTTON      ID_SMALLZOOM
     BUTTON      ID_UPMIRRORING
     BUTTON      ID_LRMIRRORING
-    BUTTON      ID_BUTTON32824
+    BUTTON      ID_OAMIRRORING
 END
 
 IDR_FILTERBAR TOOLBAR DISCARDABLE  30, 30
 BEGIN
-    BUTTON      ID_BACKWARD
-    BUTTON      ID_BUTTON32816
-    BUTTON      ID_BUTTON32818
-    BUTTON      ID_BUTTON32819
-    BUTTON      ID_BUTTON32820
-    BUTTON      ID_BUTTON32821
-    BUTTON      ID_BUTTON32822
-    BUTTON      ID_BUTTON32823
+    BUTTON      IDM_BACKWARD
+    BUTTON      IDM_SLEEK
+    BUTTON      IDM_NEONRED
+    BUTTON      IDM_SHARPEN
+    BUTTON      IDM_RELIEF
+    BUTTON      IDM_INLAY
+    BUTTON      IDM_EXPOSURE
+    BUTTON      IDM_DIFFUSE
+END
+
+IDR_COLORBAR TOOLBAR DISCARDABLE  500, 36
+BEGIN
+    BUTTON      ID_COLORBAR
 END
 
 
@@ -165,27 +171,47 @@ BEGIN
     END
     POPUP "显示 ", CHECKED
     BEGIN
-        MENUITEM "主工具条",                    IDM_MAINBAR, CHECKED
+        MENUITEM "显隐工具栏",                  ID_VIEW_TOOLBAR, CHECKED
         MENUITEM "字体",                        IDM_FONTBAR, CHECKED
         MENUITEM "几何变换工具条",              IDM_GEOMTRANSBAR, CHECKED
         MENUITEM "滤镜工具条",                  IDM_FILTERBAR, CHECKED
-        MENUITEM "绘图工具条",                  IDM_DRAWBAR
+        MENUITEM "绘图工具条",                  IDM_DRAWBAR, CHECKED
         MENUITEM "颜色工具条",                  IDM_COLORBAR
     END
     POPUP "绘制"
     BEGIN
+        MENUITEM "选择",                        IDM_SELECTSHAPE, GRAYED
         MENUITEM "直线",                        IDM_LINE
-        MENUITEM "圆",                          IDM_CIRCLE
-        MENUITEM "三角形",                      IDM_TRIANGLE
-        MENUITEM "矩形",                        IDM_RECTANGLE
-        MENUITEM "五边形",                      IDM_FIVEANGLE
+        MENUITEM "圆",                          IDM_CIRCLE, GRAYED
+        MENUITEM "三角形",                      IDM_TRIANGLE, GRAYED
+        MENUITEM "矩形",                        IDM_RECTANGLE, GRAYED
+        MENUITEM "五边形",                      IDM_FIVEANGLE, GRAYED
     END
     POPUP "几何变换"
     BEGIN
-        MENUITEM "平移",                        IDM_TRANSLATION
-        MENUITEM "旋转",                        IDM_SPIN
-        MENUITEM "缩放",                        IDM_ZOOM
-        MENUITEM "镜像",                        IDM_MIRRORING
+        POPUP "平移"
+        BEGIN
+            MENUITEM "左移",                        ID_LEFTTRANSLATION
+            MENUITEM "上移",                        ID_UPTRANSLATION
+            MENUITEM "下移",                        ID_DOWNTRANSLATION
+            MENUITEM "右移",                        ID_RIGHTTRANSLATION
+        END
+        POPUP "旋转"
+        BEGIN
+            MENUITEM "顺时针旋转",                  ID_RIGHTSPIN
+            MENUITEM "逆时针旋转",                  ID_LEFTSPIN
+        END
+        POPUP "缩放"
+        BEGIN
+            MENUITEM "放大",                        ID_BIGZOOM
+            MENUITEM "缩小",                        ID_SMALLZOOM
+        END
+        POPUP "镜像"
+        BEGIN
+            MENUITEM "垂直镜像",                    ID_UPMIRRORING
+            MENUITEM "水平镜像",                    ID_LRMIRRORING
+            MENUITEM "斜角镜像",                    ID_OAMIRRORING
+        END
     END
     POPUP "滤镜"
     BEGIN
@@ -433,6 +459,54 @@ BEGIN
     AFX_IDS_PREVIEW_CLOSE   "关闭打印预览模式\n取消预阅"
     ID_INDICATOR_CUR_POSITION_X "鼠标位置X"
     ID_INDICATOR_CUR_POSITION_Y "鼠标位置Y"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_OAMIRRORING          "斜角镜像"
+    ID_COLORBAR             "颜色选择框"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_EXPOSURE            "曝光处理"
+    IDM_DIFFUSE             "扩散处理"
+    ID_DOWNTRANSLATION      "下移"
+    ID_RIGHTSPIN            "顺时针旋转"
+    ID_LEFTSPIN             "逆时针旋转"
+    ID_BIGZOOM              "放大"
+    ID_SMALLZOOM            "缩小"
+    ID_UPMIRRORING          "垂直镜像"
+    ID_LRMIRRORING          "水平镜像"
+    ID_BACKWARD             "逆反处理"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SELECTSHAPE         "选择图形的一部分"
+    ID_LEFTTRANSLATION      "左移"
+    ID_RIGHTTRANSLATION     "右移"
+    ID_UPTRANSLATION        "上移"
+    IDM_FONTBAR             "显示字体"
+    IDM_GEOMTRANSBAR        "显示几何变换工具条"
+    IDM_FILTERBAR           "显示滤镜工具条"
+    IDM_DRAWBAR             "显示绘图工具条"
+    IDM_MAINBAR             "显示主工具条"
+    IDM_COLORBAR            "设置颜色工具条"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_LINE                "绘制直线"
+    IDM_CIRCLE              "绘制圆"
+    IDM_TRIANGLE            "绘制三角形"
+    IDM_RECTANGLE           "绘制矩形"
+    IDM_FIVEANGLE           "绘制五边形"
+    IDM_SLEEK               "平滑处理"
+    IDM_NEONRED             "霓虹处理"
+    IDM_SHARPEN             "锐化处理"
+    IDM_RELIEF              "浮雕处理"
+    IDM_INLAY               "镶嵌处理"
 END
 
 #endif    // Chinese (P.R.C.) resources

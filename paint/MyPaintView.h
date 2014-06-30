@@ -24,7 +24,7 @@ public:
 
 protected:
 	CPaintView* m_paintView;
-	CMyTracker m_rectTracker;
+	CRectTracker m_rectTracker;
 // Operations
 public:
 	CPaintDoc* GetDocument();

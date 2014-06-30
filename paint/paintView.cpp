@@ -21,6 +21,9 @@ IMPLEMENT_DYNCREATE(CPaintView, CView)
 BEGIN_MESSAGE_MAP(CPaintView, CView)
 	//{{AFX_MSG_MAP(CPaintView)
 	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_RBUTTONDOWN()
 	ON_COMMAND(IDM_BACKWARD, OnBackward)
 	ON_COMMAND(IDM_EXPOSURE, OnExposure)
 	ON_COMMAND(IDM_NEONRED, OnNeonred)
@@ -28,11 +31,9 @@ BEGIN_MESSAGE_MAP(CPaintView, CView)
 	ON_COMMAND(IDM_SHARPEN, OnSharpen)
 	ON_COMMAND(IDM_SLEEK, OnSleek)
 	ON_COMMAND(IDM_INLAY, OnInlay)
-	ON_WM_ERASEBKGND()
+	ON_COMMAND(IDM_DIFFUSE, OnDiffuse)
 	ON_WM_MOUSEMOVE()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_RBUTTONDOWN()
+	ON_WM_SETCURSOR()
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -80,13 +81,17 @@ void CPaintView::OnDraw(CDC* pDC)
 	CPaintDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 
+	OnPrepareDC(pDC);
+
 	CRect rect;
 	GetClientRect(&rect);
 	int i;
 
 	CPen pen(PS_DOT,1,RGB(128,128,128));
 	CPen* oldPen = pDC->SelectObject(&pen);
+
 	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+	
 	for (i = 10;i<rect.Height();i+=10)
 	{
 		pDC->MoveTo(0,i);
@@ -98,6 +103,13 @@ void CPaintView::OnDraw(CDC* pDC)
 		pDC->MoveTo(i,0);
 		pDC->LineTo(i,rect.Height());
 	}
+
+
+	if (m_shape && m_shape->m_bSelected)
+	{
+		m_shape->DrawStroke(pDC);
+	}
+
 	pDC->SelectObject(oldPen);
 	pen.DeleteObject();
 	// TODO: add draw code for native data here
@@ -194,10 +206,12 @@ void CPaintView::OnInitialUpdate()
 
 //	MyDC->SelectObject(&bit);
 	MyDC->SelectObject(&bitmap);
-// 	
+
+
 // 	CPaintDoc* pDoc = GetDocument();
 // 	MyDC->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));
-	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+//	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+	ReleaseDC(pDC);
 }
 
 void CPaintView::OnBackward() 
@@ -257,48 +271,52 @@ void CPaintView::OnInlay()
 	Invalidate();
 }
 
-BOOL CPaintView::OnEraseBkgnd(CDC* pDC) 
-{
-	// TODO: Add your message handler code here and/or call default
-	return FALSE;
-	return CView::OnEraseBkgnd(pDC);
-}
 void CPaintView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
 	CDC* pDC = GetDC();
-	OnPrepareDC(pDC);
-	pDC->DPtoLP(&point);
+	OnPrepareDC(pDC);//设置DC的滚动属性，，与scrollview有关
+	pDC->DPtoLP(&point);//转换当前点为逻辑位置坐标
 	
 	CPaintDoc* pDoc = GetDocument();
 	
 	if (m_shape && m_shape->m_bSelected)
-	{
+	{	
 		if (m_shape->IsPointIn(point))
 		{
-			//修改鼠标样式，，
-			//移动所绘制图形的样式
-			//
-			return;
+			int hit = m_shape->m_tracker.HitTest(point);
+			if(hit >= 0 &&m_shape->m_tracker.Track(this,point,TRUE))
+			{
+				m_shape->ReSize(m_shape->m_tracker.m_rect);
+				//////////////////////////////////////////////////////////////////////////
+				// 		CRectTracker::hitNothing    –1
+				// 		CRectTracker::hitTopLeft   0
+				// 		CRectTracker::hitTopRight   1
+				// 		CRectTracker::hitBottomRight   2
+				// 		CRectTracker::hitBottomLeft   3
+				// 		CRectTracker::hitTop   4
+				//		CRectTracker::hitRight   5
+				//		CRectTracker::hitBottom   6
+				//		CRectTracker::hitLeft   7
+				// 		CRectTracker::hitMiddle   8
+				//////////////////////////////////////////////////////////////////////////
+			}
 		}
 		else
 		{
-			//将m_shape写入到mydc里面
-			//
+			m_shape->Draw(MyDC);
 			delete m_shape;
 			m_shape = NULL;
-			return;
 		}
 	}
-	SetCapture();
-	if (m_shape == NULL)
+	else if (m_shape == NULL)
 	{
+		SetCapture();	
 		m_shape = pDoc->NewShape();
 		m_shape->SetCurrentPoint(point);
-		m_shape->m_bSelected = true;
-		pDoc->SetModifiedFlag();
-	}	
-	ReleaseDC(pDC);	
+		pDoc->SetModifiedFlag();	
+		ReleaseDC(pDC);	
+	}
 	Invalidate();
 
 	CView::OnLButtonDown(nFlags, point);
@@ -335,8 +353,9 @@ void CPaintView::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 		//Step0.3 绘制
 		else{
-			//Step1. 加入新点
+			
 			m_shape->SetCurrentPoint(point);
+			m_shape->m_bSelected = true;
 		}
 		
 		ReleaseCapture();
@@ -349,6 +368,72 @@ void CPaintView::OnLButtonUp(UINT nFlags, CPoint point)
 void CPaintView::OnRButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-	
+	CDC* pDC = GetDC();
+	OnPrepareDC(pDC);//设置DC的滚动属性，，与scrollview有关
+	pDC->DPtoLP(&point);//转换当前点为逻辑位置坐标
+	if (m_shape && m_shape->m_bSelected)
+	{
+		if (m_shape->IsPointIn(point))
+		{
+			//////////////////////////////////////////////////////////////////////////
+			//此处添加弹出式菜单
+			//////////////////////////////////////////////////////////////////////////
+		}
+		else
+		{
+			m_shape->Draw(MyDC);
+			delete m_shape;
+			m_shape = NULL;
+		}
+	}
+	Invalidate();
 	CView::OnRButtonDown(nFlags, point);
+}
+
+void CPaintView::OnDiffuse() 
+{
+	// TODO: Add your command handler code here
+	fil.Diffuse(MyDC,0,0,x,y);
+	Invalidate();
+}
+
+BOOL CPaintView::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+{
+	// TODO: Add your message handler code here and/or call default
+
+	
+	if(pWnd == this && m_shape){
+		CPoint point;
+		//Step1. get cursor position
+		GetCursorPos(&point);
+		//Step2. convert point from screen to client
+		ScreenToClient(&point);
+		
+		CDC* pDC = GetDC();//获得DC
+		OnPrepareDC(pDC);//设置DC的滚动属性，，与scrollview有关
+		pDC->DPtoLP(&point);//转换当前点为逻辑位置坐标
+		
+		//////////////////////////////////////////////////////////////////////////
+		// 		CRectTracker::hitNothing    –1
+		// 		CRectTracker::hitTopLeft   0
+		// 		CRectTracker::hitTopRight   1
+		// 		CRectTracker::hitBottomRight   2
+		// 		CRectTracker::hitBottomLeft   3
+		// 		CRectTracker::hitTop   4
+		//		CRectTracker::hitRight   5
+		//		CRectTracker::hitBottom   6
+		//		CRectTracker::hitLeft   7
+		// 		CRectTracker::hitMiddle   8
+		//////////////////////////////////////////////////////////////////////////
+		if(m_shape->m_tracker.HitTest(point) >= 0){
+			//Step3. set cursor, **notice, use nHitTest instead of return of tracker
+			m_shape->m_tracker.SetCursor(pWnd, nHitTest);			
+			return true;
+		}
+		
+		ReleaseDC(pDC);
+	}
+
+
+	return CView::OnSetCursor(pWnd, nHitTest, message);
 }

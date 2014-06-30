@@ -14,6 +14,7 @@
 class CShapeLine : public CShape  
 {
 public:
+	virtual void Draw(CDC*pDC);
 	virtual void DrawStroke(CDC*pDC);
 	virtual BOOL IsPointIn(const CPoint &point);
 //	virtual void ReDrawStroke(CDC *pDC, CPoint point);

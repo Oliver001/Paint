@@ -190,9 +190,6 @@ CShape* CPaintDoc::NewShape()
 	{
 	case LINE:
 		shape = new CShapeLine();
-		shape->m_nPenWidth = m_nLineWidth;
-		shape->m_nPenStyle = m_nLineStyle;
-		shape->m_color = clr;
 		break;
 	case CIRCLE:
 		break;
@@ -207,6 +204,6 @@ CShape* CPaintDoc::NewShape()
 	shape->m_color  = clr;
 	shape->m_nPenStyle = m_nLineStyle;
 	shape->m_nPenWidth = m_nLineWidth;
-	shape->m_bSelected = true;
+
 	return shape;
 }

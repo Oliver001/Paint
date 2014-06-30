@@ -103,7 +103,7 @@ void CMyTracker::Draw(CDC *pDC,UINT type,COLORREF clr,UINT m)
 	if ((m_nStyle & (resizeInside|resizeOutside)) != 0)
 	{
 
-		CPen pen(PS_SOLID,2,clr);
+		CPen pen(PS_SOLID,4,clr);
 		pDC->SelectObject(&pen);
 		UINT mask = GetHandleMask();
 		for (int i = 0; i < 8; ++i)
@@ -136,4 +136,9 @@ void CMyTracker::Draw(CDC *pDC,UINT type,COLORREF clr,UINT m)
 	if (pOldBrush != NULL)
 		pDC->SelectObject(pOldBrush);
 	VERIFY(pDC->RestoreDC(-1));
+}
+
+void CMyTracker::GetHandleRect(int nHandle, CRect *pHandleRect) const
+{
+	CRectTracker::GetHandleRect(nHandle, pHandleRect);
 }

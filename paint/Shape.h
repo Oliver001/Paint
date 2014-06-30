@@ -23,6 +23,7 @@ public:
 	CShape();
 	virtual ~CShape();
 public:
+	virtual void Draw(CDC*pDC)=0;
 	virtual void SetCurrentPoint(CPoint point);
 	virtual void ReDrawStroke(CDC *pDC, CPoint point);
 	virtual BOOL IsPointIn(const CPoint &point);

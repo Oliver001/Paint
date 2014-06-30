@@ -69,7 +69,8 @@ protected:
 	afx_msg void OnSharpen();
 	afx_msg void OnSleek();
 	afx_msg void OnInlay();
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnDiffuse();
+	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

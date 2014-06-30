@@ -12,6 +12,7 @@
 class CMyTracker : public CRectTracker  
 {
 public:
+	void GetHandleRect(int nHandle, CRect* pHandleRect) const;
 	CMyTracker();
 	virtual ~CMyTracker();
 	void Draw(CDC *pDC,UINT type=1,COLORREF clr=RGB(0,0,0),UINT m=0xff);

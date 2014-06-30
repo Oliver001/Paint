@@ -10,7 +10,9 @@
 #define IDR_GEOMTRANSBAR                132
 #define IDR_FILTERBAR                   135
 #define IDB_BG                          137
+#define IDR_COLORBAR                    138
 #define ID_SELECTSHAPE                  32771
+#define IDM_SELECTSHAPE                 32771
 #define ID_DRAWLINE                     32772
 #define ID_DRAWCIRCLE                   32773
 #define ID_DRAWTRIANGLE                 32774
@@ -59,6 +61,8 @@
 #define ID_BUTTON32822                  32822
 #define ID_BUTTON32823                  32823
 #define ID_BUTTON32824                  32824
+#define ID_OAMIRRORING                  32824
+#define ID_COLORBAR                     32826
 #define ID_INDICATOR_CUR_POSITION_X     61446
 #define ID_INDICATOR_CUR_POSITION_Y     61447
 
@@ -67,8 +71,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        138
-#define _APS_NEXT_COMMAND_VALUE         32826
+#define _APS_NEXT_RESOURCE_VALUE        140
+#define _APS_NEXT_COMMAND_VALUE         32828
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
