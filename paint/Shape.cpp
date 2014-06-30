@@ -55,37 +55,61 @@ void CShape::Move(int x, int y)
 
 void CShape::DrawStroke(CDC *pDC)
 {
-	CPen *pOld, pNew; 
-	pNew.CreatePen(m_nPenStyle, m_nPenWidth, m_color);
-	pOld = pDC->SelectObject(&pNew);
-	
-	///
-	/////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-
-
-
+	Draw(pDC);
 	if(m_bSelected && m_points.GetSize() == 2)
 	{
 		m_tracker.m_nStyle = CRectTracker::resizeOutside;
 		m_tracker.m_rect.SetRect(m_points.GetAt(0), m_points.GetAt(1));
 		m_tracker.m_rect.NormalizeRect();
-		m_tracker.Draw(pDC);
+		m_tracker.Draw(pDC,1,m_color,0xff);
+		
+		//////////////////////////////////////////////////////////////////////////
+		//m_tracker.Draw(pDC,1,m_color,0x05);//时间比较紧，直线也以矩形方式进行移动变换
+		//绘制直线的类中加以重载即可
+		//////////////////////////////////////////////////////////////////////////
 	}
-	pDC->SelectObject(pOld);
 }
-
 BOOL CShape::IsPointIn(const CPoint &point)
 {
+	int minx,maxx,miny,maxy;
 	
-	return TRUE;
+	CRect rect;
+	m_tracker.GetHandleRect(0,&rect);
+	if (m_points[0].x<m_points[1].x)
+	{
+		minx = m_points[0].x - m_tracker.m_nHandleSize;
+		maxx = m_points[1].x + m_tracker.m_nHandleSize;
+	}
+	else
+	{
+		minx = m_points[1].x - m_tracker.m_nHandleSize;
+		maxx = m_points[0].x + m_tracker.m_nHandleSize;
+	}
+	if (m_points[0].y<m_points[1].y)
+	{
+		miny = m_points[0].y - m_tracker.m_nHandleSize;
+		maxy = m_points[1].y + m_tracker.m_nHandleSize;
+	}
+	else
+	{
+		miny = m_points[1].y - m_tracker.m_nHandleSize;
+		maxy = m_points[0].y + m_tracker.m_nHandleSize;
+	}
+
+	if (point.x >= minx && point.x <= maxx && point.y >= miny && point.y <= maxy)
+	{
+		return TRUE;
+	}
+	return FALSE;
 }
+
 
 void CShape::ReDrawStroke(CDC *pDC, CPoint point)
 {
-	if(m_points.GetSize() < 2){
-		if(m_points.GetSize() == 1){
+	if(m_points.GetSize() < 2)
+	{
+		if(m_points.GetSize() == 1)
+		{
 			m_points.Add(point);
 			DrawStroke(pDC);
 		}

@@ -111,10 +111,6 @@ SOURCE=.\paint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\paint.odl
-# End Source File
-# Begin Source File
-
 SOURCE=.\paint.rc
 # End Source File
 # Begin Source File
@@ -131,7 +127,23 @@ SOURCE=.\Shape.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeEllipse.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ShapeLine.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapePentagon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeRect.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeTriangle.cpp
 # End Source File
 # Begin Source File
 
@@ -180,7 +192,23 @@ SOURCE=.\Shape.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeEllipse.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ShapeLine.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapePentagon.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeRect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShapeTriangle.h
 # End Source File
 # Begin Source File
 

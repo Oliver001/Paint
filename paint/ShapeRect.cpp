@@ -1,10 +1,10 @@
-// ShapeLine.cpp: implementation of the CShapeLine class.
+// ShapeRect.cpp: implementation of the CShapeRect class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "paint.h"
-#include "ShapeLine.h"
+#include "ShapeRect.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -16,20 +16,19 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CShapeLine::CShapeLine()
-
+CShapeRect::CShapeRect()
 {
-	m_nDrawType = LINE;
+	m_nDrawType = RECTANGLE;
 	m_bSelected = false;
 	m_tracker.m_nHandleSize = 8;
 }
 
-CShapeLine::~CShapeLine()
+CShapeRect::~CShapeRect()
 {
 
 }
 
-// void CShapeLine::SetCurrentPoint(CPoint &point)
+// void CShapeRect::SetCurrentPoint(CPoint &point)
 // {
 // 	if(m_points.GetSize() < 2){
 // 		m_points.Add(point);
@@ -39,50 +38,8 @@ CShapeLine::~CShapeLine()
 // 	}
 // }
 
-// void CShapeLine::ReDrawStroke(CDC *pDC, CPoint point)
+// BOOL CShapeRect::IsPointIn(const CPoint &point)
 // {
-// 	if(m_points.GetSize() < 2){
-// 		if(m_points.GetSize() == 1){
-// 			m_points.Add(point);
-// 			DrawStroke(pDC);
-// 		}
-// 		return ;
-// 	}
-// 	pDC->SetROP2(R2_NOTXORPEN);
-// 	
-// 	DrawStroke(pDC);
-// 	SetCurrentPoint(point);
-// 	DrawStroke(pDC);
-// }
-
-// BOOL CShapeLine::IsPointIn(const CPoint &point)
-// {
-// // 	int x1 = point.x - m_points.GetAt(0).x;
-// // 	int x2 = point.x - m_points.GetAt(1).x;
-// // 	int y1 = point.y - m_points.GetAt(0).y;
-// // 	int y2 = point.y - m_points.GetAt(1).y;
-// // 	//y1/x1=y2/x2 => x1*y2=x2*y1
-// // 	int measure = x1*y2 - x2*y1;
-// // 	
-// // 	//tolerable distance
-// // 	int rule = abs(m_points.GetAt(1).x - m_points.GetAt(0).x)
-// // 		+abs(m_points.GetAt(0).y - m_points.GetAt(1).y);
-// // 	rule *= m_nPenWidth;
-// // 	
-// // 	if(measure < rule && measure > -rule){
-// // 		//between the two points
-// // 		if(x1 * x2 < 0)
-// // 			return TRUE;
-// // 		else
-// // 			return FALSE;
-// // 	}
-// // 	else
-// // 		return FALSE;
-// 	
-// 	//////////////////////////////////////////////////////////////////////////
-// 	//以上这一段代码用来确定点是否在直线上，由于时间原因，我们将直线当做矩形来
-// 	//即，点只要在以此直线为对角线即可
-// 	//////////////////////////////////////////////////////////////////////////
 // 	int minx,maxx,miny,maxy;
 // 
 // 	CRect rect;
@@ -115,7 +72,7 @@ CShapeLine::~CShapeLine()
 // 	return FALSE;
 // }
 
-// void CShapeLine::DrawStroke(CDC *pDC)
+// void CShapeRect::DrawStroke(CDC *pDC)
 // {
 // 	Draw(pDC);
 // 	if(m_bSelected && m_points.GetSize() == 2)
@@ -128,14 +85,15 @@ CShapeLine::~CShapeLine()
 // 	}
 // }
 
-void CShapeLine::Draw(CDC *pDC)
+void CShapeRect::Draw(CDC *pDC)
 {
 	CPen *pOld, pNew; 
 	pNew.CreatePen(m_nPenStyle, m_nPenWidth, m_color);
 	pOld = pDC->SelectObject(&pNew);
-	
-	pDC->MoveTo(m_points.GetAt(0));
-	pDC->LineTo(m_points.GetAt(1));
+	pDC->SelectStockObject(NULL_BRUSH);
+	pDC->Rectangle(m_points[0].x,m_points[0].y,m_points[1].x,m_points[1].y);
 	
 	pDC->SelectObject(pOld);
+	pNew.DeleteObject();
+
 }

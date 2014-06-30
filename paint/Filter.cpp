@@ -281,9 +281,9 @@ void CFilter::Neonred(CDC *pDC, int x1, int y1, int x2, int y2)//ÄÞºç´¦Àí
 			g2=GetGValue(clr2);
 			b2=GetBValue(clr2);
 			
-			r=sqrt((r-r1)*(r-r1)+(r-r2)*(r-r2));
-			g=sqrt((g-g1)*(g-g1)+(g-g2)*(g-g2));
-            b=sqrt((b-b1)*(b-b1)+(b-b2)*(b-b2));
+			r=(int)sqrt((r-r1)*(r-r1)+(r-r2)*(r-r2));
+			g=(int)sqrt((g-g1)*(g-g1)+(g-g2)*(g-g2));
+            b=(int)sqrt((b-b1)*(b-b1)+(b-b2)*(b-b2));
 			
 			MemDC.SetPixel(i,j,RGB(r,g,b));
 		}

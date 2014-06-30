@@ -6,8 +6,10 @@
 
 #include "paintDoc.h"
 #include "ShapeLine.h"
-#include "shape.h"
-
+#include "ShapeRect.h"
+#include "ShapeEllipse.h"
+#include "ShapePentagon.h"
+#include "ShapeTriangle.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -192,12 +194,16 @@ CShape* CPaintDoc::NewShape()
 		shape = new CShapeLine();
 		break;
 	case CIRCLE:
+		shape = new CShapeEllipse();
 		break;
 	case TRIANGLE:
+		shape = new CShapeTriangle();
 		break;
 	case RECTANGLE:
+		shape = new CShapeRect();
 		break;
 	case FIVEANGLE:
+		shape = new CShapePentagon();
 		break;
 	}
 

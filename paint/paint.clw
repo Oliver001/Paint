@@ -16,12 +16,12 @@ Class3=CPaintView
 Class4=CMainFrame
 
 ResourceCount=6
-Resource1=IDR_FILTERBAR
+Resource1=IDR_COLORBAR
 Class5=CAboutDlg
 Class6=CMyPaintView
-Resource2=IDR_GEOMTRANSBAR
-Resource3=IDR_COLORBAR
-Resource4=IDR_DRAWBAR
+Resource2=IDR_FILTERBAR
+Resource3=IDR_DRAWBAR
+Resource4=IDR_GEOMTRANSBAR
 Resource5=IDD_ABOUTBOX
 Resource6=IDR_MAINFRAME
 
@@ -47,6 +47,7 @@ ImplementationFile=paintView.cpp
 Filter=C
 BaseClass=CView
 VirtualFilter=VWC
+LastObject=CPaintView
 
 
 [CLS:CMainFrame]

@@ -6,23 +6,27 @@
 --------------------Configuration: paint - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/paint.res" /i "Debug" /d "_DEBUG" /d "_AFXDLL" "C:\Users\Administrator\Desktop\SVN\trunk\paint\paint.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1FED.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/paint.res" /d "_DEBUG" /d "_AFXDLL" "C:\Users\Administrator\Desktop\¡¶ÊµÑµ¡·\paint\paint.rc"" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC88C.tmp" with contents
 [
 /nologo /subsystem:windows /profile /debug /machine:I386 /out:"Debug/paint.exe" 
-.\Debug\Filter.obj
-.\Debug\MainFrm.obj
-.\Debug\MyPaintView.obj
-.\Debug\MyTracker.obj
-.\Debug\paint.obj
-.\Debug\paintDoc.obj
-.\Debug\paintView.obj
-.\Debug\Shape.obj
-.\Debug\ShapeLine.obj
-.\Debug\StdAfx.obj
-.\Debug\paint.res
+".\Debug\Filter.obj"
+".\Debug\MainFrm.obj"
+".\Debug\MyPaintView.obj"
+".\Debug\MyTracker.obj"
+".\Debug\paint.obj"
+".\Debug\paintDoc.obj"
+".\Debug\paintView.obj"
+".\Debug\Shape.obj"
+".\Debug\ShapeEllipse.obj"
+".\Debug\ShapeLine.obj"
+".\Debug\ShapePentagon.obj"
+".\Debug\ShapeRect.obj"
+".\Debug\ShapeTriangle.obj"
+".\Debug\StdAfx.obj"
+".\Debug\paint.res"
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1FED.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPC88C.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Linking...
