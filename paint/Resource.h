@@ -63,6 +63,8 @@
 #define ID_BUTTON32824                  32824
 #define ID_OAMIRRORING                  32824
 #define ID_COLORBAR                     32826
+#define IDM_FILL                        32828
+#define ID_FILEOPEN                     32829
 #define ID_INDICATOR_CUR_POSITION_X     61446
 #define ID_INDICATOR_CUR_POSITION_Y     61447
 
@@ -72,7 +74,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        140
-#define _APS_NEXT_COMMAND_VALUE         32828
+#define _APS_NEXT_COMMAND_VALUE         32830
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

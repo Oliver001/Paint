@@ -103,12 +103,15 @@ END
 IDR_DRAWBAR TOOLBAR DISCARDABLE  30, 30
 BEGIN
     BUTTON      IDM_SELECTSHAPE
+    SEPARATOR
     BUTTON      IDM_LINE
     SEPARATOR
     BUTTON      IDM_CIRCLE
+    SEPARATOR
     BUTTON      IDM_TRIANGLE
     SEPARATOR
     BUTTON      IDM_RECTANGLE
+    SEPARATOR
     BUTTON      IDM_FIVEANGLE
 END
 
@@ -156,7 +159,7 @@ BEGIN
     POPUP "文件(&F)"
     BEGIN
         MENUITEM "新建(&N)\tCtrl+N",            ID_FILE_NEW
-        MENUITEM "打开(&O)...\tCtrl+O",         ID_FILE_OPEN
+        MENUITEM "打开(&O)...\tCtrl+O",         ID_FILEOPEN
         MENUITEM "保存(&S)\tCtrl+S",            ID_FILE_SAVE
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                    ID_APP_EXIT
@@ -186,6 +189,7 @@ BEGIN
         MENUITEM "三角形",                      IDM_TRIANGLE, GRAYED
         MENUITEM "矩形",                        IDM_RECTANGLE, GRAYED
         MENUITEM "五边形",                      IDM_FIVEANGLE, GRAYED
+        MENUITEM "填充",                        IDM_FILL
     END
     POPUP "几何变换"
     BEGIN
@@ -465,6 +469,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ID_OAMIRRORING          "斜角镜像"
     ID_COLORBAR             "颜色选择框"
+    IDM_FILL                "填充"
 END
 
 STRINGTABLE DISCARDABLE 

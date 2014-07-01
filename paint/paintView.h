@@ -20,7 +20,7 @@ class CPaintView : public CView
 public: // create from serialization only
 	CPaintView();
 	DECLARE_DYNCREATE(CPaintView)
-
+	void FillColor(CDC* m_DC,COLORREF color,CPoint v_point);
 // Attributes
 public:
 	CPaintDoc* GetDocument();
@@ -28,12 +28,9 @@ public:
 	CDocument *pOldDoc;
 	CBitmap bitmap;
 	CFilter fil;
-	BITMAP bmp;
-    int x,y;
-	stack <CDC*> m_stack;
+	
 // Operations
 public:
-	CDC* MyDC;
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPaintView)
@@ -74,8 +71,6 @@ protected:
 	afx_msg void OnInlay();
 	afx_msg void OnDiffuse();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnEditUndo();
-	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "paint.h"
 #include "Filter.h"
-
+#include <math.h>
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -245,10 +245,10 @@ void CFilter::Neonred(CDC *pDC, int x1, int y1, int x2, int y2)//霓虹处理
 			g2=GetGValue(clr2);
 			b2=GetBValue(clr2);
 			
-			r=(int)sqrt((r-r1)*(r-r1)+(r-r2)*(r-r2));
-			g=(int)sqrt((g-g1)*(g-g1)+(g-g2)*(g-g2));
-            b=(int)sqrt((b-b1)*(b-b1)+(b-b2)*(b-b2));
-			
+ 			r=(int)sqrt(float((r-r1)*(r-r1)+(r-r2)*(r-r2)));
+ 			g=(int)sqrt(float((g-g1)*(g-g1)+(g-g2)*(g-g2)));
+			b=(int)sqrt(float((b-b1)*(b-b1)+(b-b2)*(b-b2)));
+ 			
 			MemDC.SetPixel(i,j,RGB(r,g,b));
 		}
 	}
@@ -472,18 +472,17 @@ void CFilter::Diffuse(CDC *pDC, int x1, int y1, int x2, int y2)//扩散处理
 	//定义一个内存设备描述表对象（即后备缓冲区）  
 	CDC MemDC;   
 	//定义一个位图对象  
-	CBitmap MemBitmap;  
+	
 	//建立与屏幕设备描述表（前端缓冲区）兼容的内存设备描述表句柄（后备缓冲区）  
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
-	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,800,600);  
-	//将位图选入到内存设备描述表  
-	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
+	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图 
+	CBitmap MemBitmap;   
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
+	  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
-	//先用背景色将位图清除干净，这里我用的是白色作为背景  
-	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));  
+ 
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 	//绘图
 
 

@@ -10,18 +10,16 @@
 #pragma once
 #endif // _MSC_VER > 1000
 #include "Filter.h"
-
+#include <stack>
+using namespace std;
 class CPaintDoc : public CDocument
 {
 protected: // create from serialization only
 	CPaintDoc();
 	DECLARE_DYNCREATE(CPaintDoc)
 
-// Attributes
 public:
-// Operations
-public:
-
+	bool Reset(int w,int h);
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPaintDoc)
@@ -29,11 +27,7 @@ public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL
-
-// Implementation
-public:
 	CShape* NewShape();
-	
 	DrawType m_DrawType;
 	COLORREF clr;
 	int m_nLineStyle;
@@ -41,14 +35,21 @@ public:
 	UINT m_cavasH;
 	UINT m_cavasW;
 	virtual ~CPaintDoc();
+	CDC* MyDC;
+	stack <CDC*> m_stack;
+	CBitmap bitmap;
 	
+	CString BmpName;//保存图像文件文件名
+	CString extname;//保存图像文件扩展名
+	//CBitmap m_bitmap;//创建位图对象
+	bool ShowBitmap(CString BmpName);//用来显示指定位图的函数
+	bool ShowJpgGif(CDC* pDC,CString strPath, int x, int y);
+	bool ShowJpgGif(void);
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-protected:
-
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CPaintDoc)
@@ -63,6 +64,12 @@ protected:
 	afx_msg void OnUpdateCircle(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateFiveangle(CCmdUI* pCmdUI);
 	afx_msg void OnSelectshape();
+	afx_msg void OnUpdateSelectshape(CCmdUI* pCmdUI);
+	afx_msg void OnFill();
+	afx_msg void OnUpdateFill(CCmdUI* pCmdUI);
+	afx_msg void OnFileopen();
+	afx_msg void OnEditUndo();
+	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

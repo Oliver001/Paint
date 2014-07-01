@@ -221,8 +221,9 @@ void CMyPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 	case 6://об
 		if(m_rectTracker.Track(this,point)){
 			//step1. cavas reset
-			GetDocument()->m_cavasH = m_rectTracker.m_rect.bottom;
-			GetDocument()->m_cavasW = m_rectTracker.m_rect.right;
+			CPaintDoc* pDoc = GetDocument();
+			pDoc->m_cavasH = m_rectTracker.m_rect.bottom;
+			pDoc->m_cavasW = m_rectTracker.m_rect.right;
 			//step2. scroll or not
 			CRect clientRect;
 			GetClientRect(&clientRect);
@@ -230,8 +231,6 @@ void CMyPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 			
 			m_paintView->MoveWindow(m_rectTracker.m_rect.left, m_rectTracker.m_rect.top,
 				m_rectTracker.m_rect.right,m_rectTracker.m_rect.bottom);
-		//	GetDocument()->BackUp();//??
-			Invalidate();
 		}
 	}
 	ReleaseDC(pDC);

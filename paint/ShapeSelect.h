@@ -14,6 +14,10 @@
 class CShapeSelect : public CShape  
 {
 public:
+	void SetDC(CDC* pDC,int w,int h);
+	void SetRect();
+	CRect selectRect;
+	CDC* selectDC;
 	virtual void Draw(CDC*pDC);
 	CShapeSelect();
 	virtual ~CShapeSelect();

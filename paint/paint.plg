@@ -6,13 +6,33 @@
 --------------------Configuration: paint - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP2974.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/paint.res" /d "_DEBUG" /d "_AFXDLL" "D:\SVN\trunk\paint\paint.rc"" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP53D0.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/paint.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\Users\Administrator\Desktop\paint\paintDoc.cpp"
+"D:\SVN\trunk\paint\Filter.cpp"
+"D:\SVN\trunk\paint\MainFrm.cpp"
+"D:\SVN\trunk\paint\MyPaintView.cpp"
+"D:\SVN\trunk\paint\MyTracker.cpp"
+"D:\SVN\trunk\paint\paint.cpp"
+"D:\SVN\trunk\paint\paintDoc.cpp"
+"D:\SVN\trunk\paint\paintView.cpp"
+"D:\SVN\trunk\paint\Shape.cpp"
+"D:\SVN\trunk\paint\ShapeEllipse.cpp"
+"D:\SVN\trunk\paint\ShapeLine.cpp"
+"D:\SVN\trunk\paint\ShapePentagon.cpp"
+"D:\SVN\trunk\paint\ShapeRect.cpp"
+"D:\SVN\trunk\paint\ShapeSelect.cpp"
+"D:\SVN\trunk\paint\ShapeTriangle.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP2974.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP2975.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP53D0.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP53D1.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/paint.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\SVN\trunk\paint\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP53D1.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP53E2.tmp" with contents
 [
 /nologo /subsystem:windows /profile /debug /machine:I386 /out:"Debug/paint.exe" 
 .\Debug\Filter.obj
@@ -32,32 +52,28 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP2975.tmp" with 
 .\Debug\StdAfx.obj
 .\Debug\paint.res
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP2975.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP53E2.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+Filter.cpp
+MainFrm.cpp
+MyPaintView.cpp
+MyTracker.cpp
+paint.cpp
 paintDoc.cpp
+paintView.cpp
+Shape.cpp
+ShapeEllipse.cpp
+ShapeLine.cpp
+ShapePentagon.cpp
+ShapeRect.cpp
+ShapeSelect.cpp
+ShapeTriangle.cpp
+Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP2C72.tmp" with contents
-[
-/nologo /o"Debug/paint.bsc" 
-.\Debug\StdAfx.sbr
-.\Debug\Filter.sbr
-.\Debug\MainFrm.sbr
-.\Debug\MyPaintView.sbr
-.\Debug\MyTracker.sbr
-.\Debug\paint.sbr
-.\Debug\paintDoc.sbr
-.\Debug\paintView.sbr
-.\Debug\Shape.sbr
-.\Debug\ShapeEllipse.sbr
-.\Debug\ShapeLine.sbr
-.\Debug\ShapePentagon.sbr
-.\Debug\ShapeRect.sbr
-.\Debug\ShapeSelect.sbr
-.\Debug\ShapeTriangle.sbr]
-Creating command line "bscmake.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP2C72.tmp"
-Creating browse info file...
-<h3>Output Window</h3>
 
 
 

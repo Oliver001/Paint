@@ -6,6 +6,7 @@
 #include "Filter.h"
 #include "paintDoc.h"
 #include "paintView.h"
+#include "ShapeSelect.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,9 +34,7 @@ BEGIN_MESSAGE_MAP(CPaintView, CView)
 	ON_COMMAND(IDM_INLAY, OnInlay)
 	ON_COMMAND(IDM_DIFFUSE, OnDiffuse)
 	ON_WM_SETCURSOR()
-	ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
 	ON_WM_MOUSEMOVE()
-	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
@@ -51,10 +50,7 @@ CPaintView::CPaintView()
 	// TODO: add construction code here
 	m_shape = NULL;
 	bitmap.LoadBitmap(IDB_BG);///加载位图
-	bitmap.GetBitmap(&bmp);
-    x = bmp.bmWidth;
-    y = bmp.bmHeight;
-
+//	bitmap.GetBitmap(&bmp);
 }
 
 CPaintView::~CPaintView()
@@ -64,13 +60,6 @@ CPaintView::~CPaintView()
 	if (m_shape)
 	{
 		delete m_shape;
-	}
-	while(!m_stack.empty())
-	{
-		CDC* dc = (CDC*)m_stack.top();
-		m_stack.pop();
-	
-		delete dc;
 	}
 }
 
@@ -90,6 +79,8 @@ void CPaintView::OnDraw(CDC* pDC)
 	CPaintDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 
+//	x = pDoc->m_cavasW;
+//	y = pDoc->m_cavasH;
 	OnPrepareDC(pDC);
 
 	CRect rect;
@@ -99,7 +90,7 @@ void CPaintView::OnDraw(CDC* pDC)
 	CPen pen(PS_DOT,1,RGB(128,128,128));
 	CPen* oldPen = pDC->SelectObject(&pen);
 
-	pDC->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
+	pDC->BitBlt(0,0,pDoc->m_cavasW,pDoc->m_cavasH,pDoc->MyDC,0,0,SRCCOPY);
 	
 	for (i = 10;i<rect.Height();i+=10)
 	{
@@ -121,6 +112,7 @@ void CPaintView::OnDraw(CDC* pDC)
 
 	pDC->SelectObject(oldPen);
 	pen.DeleteObject();
+	
 	// TODO: add draw code for native data here
 }
 
@@ -203,73 +195,83 @@ void CPaintView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 	CDC* pDC=GetDC();
-	MyDC = new CDC();
- 	MyDC->CreateCompatibleDC(pDC);
-// 	BITMAP  bmp;
-// 	bitmap.GetBitmap(&bmp);
-// 	int x = bmp.bmWidth;
-// 	int y = bmp.bmHeight;
-
-// 	MyDC->SelectObject(&bitmap);
-
 	CPaintDoc* pDoc = GetDocument();
+	pDoc->MyDC = new CDC();
+	pDoc->MyDC->CreateCompatibleDC(pDC);
+
 	CBitmap MemBitmap;   
-	MemBitmap.CreateCompatibleBitmap(pDC,pDoc->m_cavasW,pDoc->m_cavasH);  
+	MemBitmap.CreateCompatibleBitmap(pDC,1400,800);
 	//将位图选入到内存设备描述表  
+
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
-	CBitmap *pOldBit=MyDC->SelectObject(&MemBitmap);  
+	CBitmap *pOldBit=pDoc->MyDC->SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MyDC->FillSolidRect(0,0,800,600,RGB(255,255,255));
+	pDoc->MyDC->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));
+	
+// 	CDC* DC = new CDC();
+// 	DC->CreateCompatibleDC(pDC);
+// 	
+// //	pDoc->MyDC->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));
+// 	DC->SelectObject(&bitmap);
+// 
+// 	pDoc->MyDC->BitBlt(0,0,400,300,DC,0,0,SRCCOPY);
+// 	ReleaseDC(pDC);
+// 	delete DC;
 
-	ReleaseDC(pDC);
 }
 
 void CPaintView::OnBackward() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Backward(MyDC,0,0,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Backward(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	
 		Invalidate();
 }
 void CPaintView::OnExposure() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Exposure(MyDC,0,0,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Exposure(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	
 	Invalidate();
 }
 void CPaintView::OnNeonred() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Neonred(MyDC,0,0,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Neonred(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 }
 
 void CPaintView::OnRelief() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Relief(MyDC,0,1,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Relief(pDoc->MyDC,0,1,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 }
 
 void CPaintView::OnSharpen() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Sharpen(MyDC,0,0,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Sharpen(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 }
 
 void CPaintView::OnSleek() 
 {
 	// TODO: Add your command handler code here
-
-	fil.Sleek(MyDC,0,0,x,y);
+CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Sleek(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 
 }
@@ -277,23 +279,44 @@ void CPaintView::OnSleek()
 void CPaintView::OnInlay() 
 {
 	// TODO: Add your command handler code here
-	
-	fil.Inlay(MyDC,0,0,x,y);
+	CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Inlay(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 }
 
 void CPaintView::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-	
-	//
-
 	CDC* pDC = GetDC();
 	OnPrepareDC(pDC);//设置DC的滚动属性，，与scrollview有关
 	pDC->DPtoLP(&point);//转换当前点为逻辑位置坐标
 	
 	CPaintDoc* pDoc = GetDocument();
 	
+	if (pDoc->m_DrawType == FILL)
+	{
+		CDC* dc = new CDC();
+		dc->CreateCompatibleDC(pDC);
+		CBitmap MemBitmap;  
+		//建立与屏幕设备描述表（前端缓冲区）兼容的内存设备描述表句柄（后备缓冲区）   
+		MemBitmap.CreateCompatibleBitmap(pDC,pDoc->m_cavasW,pDoc->m_cavasH);  
+		//将位图选入到内存设备描述表  
+		//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
+		CBitmap *pOldBit=dc->SelectObject(&MemBitmap);  
+		//先用背景色将位图清除干净，这里我用的是白色作为背景  
+		//你也可以用自己应该用的颜色  
+		dc->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));  
+		dc->BitBlt(0,0,pDoc->m_cavasW,pDoc->m_cavasH,pDoc->MyDC,0,0,SRCCOPY);
+		pDoc->m_stack.push(dc);
+	
+		CDC* mDC = new CDC();
+		FillColor(mDC,pDoc->clr,point);
+
+		return ;
+	}
+
+
 	if (m_shape && m_shape->m_bSelected)
 	{	
 		if (m_shape->IsPointIn(point))
@@ -318,8 +341,6 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		else
 		{
-			
-			CPaintDoc* pDoc = GetDocument();
 			CDC* dc = new CDC();
 			dc->CreateCompatibleDC(pDC);
 			CBitmap MemBitmap;  
@@ -331,10 +352,10 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 			//先用背景色将位图清除干净，这里我用的是白色作为背景  
 			//你也可以用自己应该用的颜色  
 			dc->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));  
-			dc->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
-			m_stack.push(dc);
+			dc->BitBlt(0,0,pDoc->m_cavasW,pDoc->m_cavasH,pDoc->MyDC,0,0,SRCCOPY);
+			pDoc->m_stack.push(dc);
 
-			m_shape->Draw(MyDC);
+			m_shape->Draw(pDoc->MyDC);
 			delete m_shape;
 			m_shape = NULL;
 		}
@@ -355,39 +376,37 @@ void CPaintView::OnLButtonDown(UINT nFlags, CPoint point)
 void CPaintView::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-	if(GetCapture() == this){
+	if(GetCapture() == this)
+	{
 		CPaintDoc *pDoc = GetDocument();		
 		CDC *pDC = GetDC();
 		OnPrepareDC(pDC);
 		pDC->DPtoLP(&point);
 		//Step0.1 点下就松开，不绘制
-		if(m_shape->m_points.GetSize() == 1){
+		if(m_shape->m_points.GetSize() == 1)
+		{
 			delete m_shape;
 			m_shape = NULL;
 		}
 		//Step0.2 选择框
-		else if(SELECT == m_shape->m_nDrawType){
-// 			bool refresh = false;
-// 			CRect rect(m_stroke->m_points[0], m_stroke->m_points[1]);
-// 			rect.NormalizeRect();//?????????
-// 			for(int i = 0; i < pDoc->m_strokeList.GetSize(); i ++){
-// 				if(rect.PtInRect(pDoc->m_strokeList.GetAt(i)->m_points.GetAt(0)) &&
-// 					rect.PtInRect(pDoc->m_strokeList.GetAt(i)->m_points.GetAt(1))){
-// 					pDoc->m_strokeList.GetAt(i)->m_bSelected = true;
-// 					refresh = true;
-// 				}
-// 			}
-// 			if(refresh)
-// 				Invalidate();
-// 			delete m_stroke;
+		else 
+		{
+			if(SELECT == m_shape->m_nDrawType)
+			{
+				m_shape->SetCurrentPoint(point);
+// 				if (m_shape->m_bSelected == false) 
+// 				{
+					 m_shape->m_bSelected = true;
+					 ((CShapeSelect*)m_shape)->SetRect();
+					 ((CShapeSelect*)m_shape)->SetDC(pDoc->MyDC,pDoc->m_cavasW,pDoc->m_cavasH);
+			//	 }
+			}
+			else//Step0.3 绘制
+			{
+				m_shape->SetCurrentPoint(point);
+				m_shape->m_bSelected = true;
+			}
 		}
-		//Step0.3 绘制
-		else{
-			
-			m_shape->SetCurrentPoint(point);
-			m_shape->m_bSelected = true;
-		}
-		
 		ReleaseCapture();
 		ReleaseDC(pDC);
 		Invalidate();
@@ -423,10 +442,10 @@ void CPaintView::OnRButtonDown(UINT nFlags, CPoint point)
 			//先用背景色将位图清除干净，这里我用的是白色作为背景  
 			//你也可以用自己应该用的颜色  
 			dc->FillSolidRect(0,0,pDoc->m_cavasW,pDoc->m_cavasH,RGB(255,255,255));  
-			dc->BitBlt(0,0,x,y,MyDC,0,0,SRCCOPY);
-			m_stack.push(dc);
+			dc->BitBlt(0,0,pDoc->m_cavasW,pDoc->m_cavasH,pDoc->MyDC,0,0,SRCCOPY);
+			pDoc->m_stack.push(dc);
 
-			m_shape->Draw(MyDC);
+			m_shape->Draw(pDoc->MyDC);
 			delete m_shape;
 			m_shape = NULL;
 		}
@@ -438,7 +457,9 @@ void CPaintView::OnRButtonDown(UINT nFlags, CPoint point)
 void CPaintView::OnDiffuse() 
 {
 	// TODO: Add your command handler code here
-	fil.Diffuse(MyDC,0,0,x,y);
+	CPaintDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	fil.Diffuse(pDoc->MyDC,0,0,pDoc->m_cavasW,pDoc->m_cavasH);
 	Invalidate();
 }
 
@@ -483,30 +504,82 @@ BOOL CPaintView::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CView::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CPaintView::OnEditUndo() 
+//DEL void CPaintView::OnEditUndo() 
+//DEL {
+//DEL 	// TODO: Add your command handler code here
+//DEL 	CPaintDoc* pDoc = GetDocument();
+//DEL 	ASSERT_VALID(pDoc);
+//DEL 	if (m_shape && m_shape->m_bSelected)
+//DEL 	{
+//DEL 		delete m_shape;
+//DEL 		m_shape = NULL;
+//DEL 	}
+//DEL 	else
+//DEL 	{
+//DEL 		if (!pDoc->m_stack.empty())
+//DEL 		{
+//DEL 			CDC* dc = pDoc->m_stack.top();
+//DEL 			pDoc->MyDC->BitBlt(0,0,pDoc->m_cavasW,pDoc->m_cavasH,dc,0,0,SRCCOPY);
+//DEL 			pDoc->m_stack.pop();
+//DEL 			
+//DEL 			delete dc;
+//DEL 		}
+//DEL 	}
+//DEL 	Invalidate();
+//DEL }
+
+//DEL void CPaintView::OnUpdateEditUndo(CCmdUI* pCmdUI) 
+//DEL {
+//DEL 	// TODO: Add your command update UI handler code here
+//DEL 	pCmdUI->Enable(!m_stack.empty());
+//DEL }
+/////////////////////////////////////////
+///////STL////////////////////////////#include "stack"
+void CPaintView::FillColor(CDC* m_DC/*!!!!!!类对象 view类变量 */,COLORREF v_color/*被填充色*/,CPoint v_point/*鼠标此时的点*/ ) 
 {
-	// TODO: Add your command handler code here
-	if (m_shape && m_shape->m_bSelected)
+	//if(没填充)
+	//{return}
+
+	stack<CPoint> coloStack;  //stl 保存要填充的点
+	CClientDC dc( this );
+	CRect rect;
+	GetClientRect(&rect);
+	CPoint currentpoint = v_point; // 鼠标的点设为种子点
+	coloStack.push(currentpoint);  //种子压入栈中
+
+	//m_DC
+	if(!m_DC->m_hDC)  
 	{
-		delete m_shape;
-		m_shape = NULL;
+		m_DC->CreateCompatibleDC(&dc);
+		CBitmap bitmap;
+		bitmap.CreateCompatibleBitmap(&dc,rect.Width(),rect.Height());
+		m_DC->SelectObject(&bitmap);
+		m_DC->BitBlt(0,0,rect.Width(),rect.Height(),&dc,0,0,SRCCOPY);
 	}
-	else
+	
+	COLORREF seedColor = m_DC->GetPixel(currentpoint);  //获取种子点颜色
+
+	while ( ! coloStack.empty() ) //栈不空？？？
 	{
-		if (!m_stack.empty())
+		currentpoint = coloStack.top();
+		coloStack.pop();    //出栈
+		CPoint ptArr[ 4 ];
+		//上下左右
+		ptArr[ 0 ] = CPoint( currentpoint.x - 1, currentpoint.y );
+		ptArr[ 1 ] = CPoint( currentpoint.x + 1, currentpoint.y );
+		ptArr[ 2 ] = CPoint( currentpoint.x, currentpoint.y - 1 );
+		ptArr[ 3 ] = CPoint( currentpoint.x, currentpoint.y + 1 );
+		//如果种子点周围四个点在客户区域内并且其颜色和种子点的颜色是相同的，那么将其放入堆栈中
+		for ( int i = 0; i < 4; i ++ )
 		{
-			CDC* dc = m_stack.top();
-			MyDC->BitBlt(0,0,x,y,dc,0,0,SRCCOPY);
-			m_stack.pop();
-			
-			delete dc;
+			if( ptArr[ i ].x >= rect.left && ptArr[ i ].x <= rect.right && ptArr[ i ].y >= rect.top && ptArr[ i ].y <= rect.bottom )
+				if( m_DC->GetPixel( ptArr[ i ] ) == seedColor )
+					coloStack.push( ptArr[ i ] );
 		}
+		m_DC->SetPixel( currentpoint, v_color ); //将当前需要填充的点的颜色设置为填充色
+		dc.SetPixel( currentpoint, v_color ); 
+
 	}
-	Invalidate();
+	Invalidate(FALSE);
 }
 
-void CPaintView::OnUpdateEditUndo(CCmdUI* pCmdUI) 
-{
-	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(!m_stack.empty());
-}

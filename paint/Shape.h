@@ -15,7 +15,7 @@
 #include <afxplex_.h>
 #include <afxtempl.h>
 #include "MyTracker.h"
-enum DrawType{LINE,CIRCLE,RECTANGLE,TRIANGLE,FIVEANGLE,SELECT};
+enum DrawType{LINE,CIRCLE,RECTANGLE,TRIANGLE,FIVEANGLE,SELECT,FILL};
 
 class CShape : public CObject  
 {
