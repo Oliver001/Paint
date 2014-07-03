@@ -15,7 +15,7 @@ class CMainFrame : public CFrameWnd
 protected: // create from serialization only
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
-
+	void DockControlBarLeftOf(CToolBar* Bar, CToolBar* LeftOf); 
 // Attributes
 public:
 
@@ -41,6 +41,15 @@ protected:  // control bar embedded members
 	CToolBar    m_wndToolBar;
 	CToolBar	m_paintToolBar;	
 	CToolBar	m_FilterToolBar;
+	CToolBar*   m_colorBar;
+	CToolBar	m_transBar;
+//	CToolBar	m_lineBar;
+	bool wndBar;
+	bool paintbar;
+	bool filterbar;
+	bool colorbar;
+	bool transbar;
+	//bool linebar;
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CMainFrame)
@@ -53,6 +62,13 @@ protected:
 	afx_msg void OnUpdateDrawbar(CCmdUI* pCmdUI);
 	afx_msg void OnColorbar();
 	afx_msg void OnUpdateColorbar(CCmdUI* pCmdUI);
+	afx_msg void OnToolbarDropDown(NMTOOLBAR* pnmh, LRESULT* plRes);
+	afx_msg void OnViewToolbar();
+	afx_msg void OnUpdateViewToolbar(CCmdUI* pCmdUI);
+	afx_msg void OnGeomtransbar();
+	afx_msg void OnUpdateGeomtransbar(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSetlineW(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSetlineS(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

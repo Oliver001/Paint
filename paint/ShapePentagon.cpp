@@ -57,21 +57,70 @@ void CShapePentagon::Draw(CDC *pDC)
 	CPoint point[5];
 	CBrush brush;
 	brush.CreateStockObject(NULL_BRUSH);
-	point[0].x =(minx+maxx)>>1;
-	point[0].y = miny;
+	if (m_nRorate  == 0)
+	{
+		point[0].x =(minx+maxx)>>1;
+		point[0].y = miny;
+		point[1].x = minx;
+		point[1].y = long(0.4*maxy+0.6*miny);
+		point[2].x = long(0.8*minx+0.2*maxx);
+		point[2].y = maxy;
+		point[3].x = long(0.8*maxx+0.2*minx);
+		point[3].y = maxy;
+		point[4].x = maxx;
+		point[4].y = long(0.4*maxy+0.6*miny);
+	}
+	else if (m_nRorate  == 1)
+	{
+		point[0].x =0.4*minx+0.6*maxx;
+		point[0].y = miny;
 
-	point[1].x = minx;
-	point[1].y = long(0.4*maxy+0.6*miny);
+		point[1].x = maxx;
+		point[1].y = (maxy+miny)>>1;
+		point[2].x = 0.4*minx+0.6*maxx;
+		point[2].y = maxy;
+		point[3].x = minx;
+		point[3].y = (0.8*maxy+0.2*miny);
+		point[4].x = minx;
+		point[4].y = long(0.8*miny+0.2*maxy);
+	}
 
-	point[2].x = long(0.8*minx+0.2*maxx);
-	point[2].y = maxy;
+	else if (m_nRorate  == 2)
+	{
+		point[0].x =(minx+maxx)>>1;
+		point[0].y = maxy;
 
-	point[3].x = long(0.8*maxx+0.2*minx);
-	point[3].y = maxy;
+		point[1].x = minx;
+		point[1].y = long(0.6*maxy+0.4*miny);
 
-	point[4].x = maxx;
-	point[4].y = long(0.4*maxy+0.6*miny);
+		point[3].x = long(0.8*maxx+0.2*minx);
+		point[2].y = miny;
 
+		point[2].x = long(0.8*minx+0.2*maxx);
+		point[3].y = miny;
+
+		point[4].x = maxx;
+		point[4].y = long(0.6*maxy+0.4*miny);
+	}
+
+	else if (m_nRorate  == 3)
+	{
+		point[0].x =minx;
+		point[0].y = (maxy+miny)>>1;
+
+		point[1].x = long(0.6*minx+0.4*maxx);
+		point[1].y = miny;
+		//	;
+
+		point[2].x = maxx;
+		point[2].y = long(0.2*maxy+0.8*miny);
+
+		point[3].x = maxx;
+		point[3].y = long(0.8*maxy+0.2*miny);
+
+		point[4].x = long(0.6*minx+0.4*maxx);
+		point[4].y = maxy;
+	}
 	if (rgn.CreatePolygonRgn(point,5,ALTERNATE))
 	{
 		pDC->FillRgn(&rgn,&brush);

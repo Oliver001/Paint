@@ -91,8 +91,21 @@ void CShapeRect::Draw(CDC *pDC)
 	pNew.CreatePen(m_nPenStyle, m_nPenWidth, m_color);
 	pOld = pDC->SelectObject(&pNew);
 	pDC->SelectStockObject(NULL_BRUSH);
-	pDC->Rectangle(m_points[0].x,m_points[0].y,m_points[1].x,m_points[1].y);
 	
+	int x1 = m_points[0].x<m_points[1].x?m_points[0].x:m_points[1].x;
+	int x2 = m_points[0].x>m_points[1].x?m_points[0].x:m_points[1].x;
+	int y1 = m_points[0].y<m_points[1].y?m_points[0].y:m_points[1].y;
+	int y2 = m_points[0].y>m_points[1].y?m_points[0].y:m_points[1].y;
+// 	if (m_nRorate%2 )
+// 	{
+// 		pDC->Rectangle(m_tracker.m_rect.);
+// 	//	pDC->Rectangle(m_points[0].x,m_points[0].y,m_points[1].x,m_points[1].y);
+// 	}
+// 	else 
+// 	{
+		pDC->Rectangle(m_points[0].x,m_points[0].y,m_points[1].x,m_points[1].y);
+//	}
+	m_tracker.m_rect = CRect(abs(x1+x2-y1-y2)>>1,abs(x1+x2-y1-y2)>>1,(abs(x1+x2-y1-y2)>>1)+y2-y1,(abs(x1+x2-y1-y2)>>1)+x2-x1);
 	pDC->SelectObject(pOld);
 	pNew.DeleteObject();
 

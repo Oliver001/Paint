@@ -19,6 +19,19 @@ protected: // create from serialization only
 	DECLARE_DYNCREATE(CPaintDoc)
 
 public:
+	bool m_bNet;
+
+    BITMAPINFO struct_bitmapInfo;
+	BITMAPINFOHEADER  bitmap_Info;
+	BOOL OpenTifDocumen(void);
+	DWORD m_dwBmSize;//图象的数据部分的大小
+	CPalette m_palDIB;//BMP图象调色板
+	HANDLE m_hDIB;//BMP图象内存块句柄
+	CSize m_sizeDoc;//图象的长和宽 
+	BOOL CreateBmpBuffer(void);
+
+	bool m_bNotEmpty;
+	void BackUp();
 	bool Reset(int w,int h);
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -36,11 +49,15 @@ public:
 	UINT m_cavasW;
 	virtual ~CPaintDoc();
 	CDC* MyDC;
+	CDC* tempDC;
+	CRect tempRect;
 	stack <CDC*> m_stack;
-	CBitmap bitmap;
-	
 	CString BmpName;//保存图像文件文件名
 	CString extname;//保存图像文件扩展名
+
+	CBitmap bitmap;
+	CShape* m_shape;
+
 	//CBitmap m_bitmap;//创建位图对象
 	bool ShowBitmap(CString BmpName);//用来显示指定位图的函数
 	bool ShowJpgGif(CDC* pDC,CString strPath, int x, int y);
@@ -70,6 +87,49 @@ protected:
 	afx_msg void OnFileopen();
 	afx_msg void OnEditUndo();
 	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);
+	afx_msg void OnCopy();
+	afx_msg void OnUpdateCopy(CCmdUI* pCmdUI);
+	afx_msg void OnPaste();
+	afx_msg void OnUpdatePaste(CCmdUI* pCmdUI);
+	afx_msg void OnCut();
+	afx_msg void OnUpdateCut(CCmdUI* pCmdUI);
+	afx_msg void OnLefttranslation();
+	afx_msg void OnDowntranslation();
+	afx_msg void OnUptranslation();
+	afx_msg void OnRighttranslation();
+	afx_msg void OnUpmirroring();
+	afx_msg void OnLrmirroring();
+	afx_msg void OnRightspin();
+	afx_msg void OnLeftspin();
+	afx_msg void OnOamirroring();
+	afx_msg void OnUpdateLefttranslation(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateLeftspin(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateLrmirroring(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOamirroring(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateRightspin(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateRighttranslation(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSmallzoom(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateUpmirroring(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateUptranslation(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateDowntranslation(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateBigzoom(CCmdUI* pCmdUI);
+	afx_msg void OnFileSave();
+	afx_msg void OnPixel2();
+	afx_msg void OnPixel5();
+	afx_msg void OnPixel10();
+	afx_msg void OnPixel15();
+	afx_msg void OnPixel20();
+	afx_msg void OnSolid();
+	afx_msg void OnDash();
+	afx_msg void OnDot();
+	afx_msg void OnPixel1();
+	afx_msg void OnUpdateSolid(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateDash(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateDot(CCmdUI* pCmdUI);
+	afx_msg void OnText();
+	afx_msg void OnUpdateText(CCmdUI* pCmdUI);
+	afx_msg void OnNet();
+	afx_msg void OnUpdateNet(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

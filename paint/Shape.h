@@ -15,7 +15,7 @@
 #include <afxplex_.h>
 #include <afxtempl.h>
 #include "MyTracker.h"
-enum DrawType{LINE,CIRCLE,RECTANGLE,TRIANGLE,FIVEANGLE,SELECT,FILL};
+enum DrawType{LINE,CIRCLE,RECTANGLE,TRIANGLE,FIVEANGLE,SELECT,FILL,MYTEXT};
 
 class CShape : public CObject  
 {
@@ -23,6 +23,9 @@ public:
 	CShape();
 	virtual ~CShape();
 public:
+	UINT mirror;
+	virtual void Rotate();
+	UINT m_nRorate;
 	virtual void Draw(CDC*pDC)=0;
 	virtual void SetCurrentPoint(CPoint point);
 	virtual void ReDrawStroke(CDC *pDC, CPoint point);
@@ -30,6 +33,7 @@ public:
 	virtual void DrawStroke(CDC *pDC);
 	virtual void Move(int x, int y);
 	virtual void ReSize(CRect newPos);
+//	virtual void Rotate()
 	COLORREF m_color;
 	int m_nPenStyle;
 	int m_nPenWidth;

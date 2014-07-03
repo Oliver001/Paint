@@ -95,6 +95,10 @@ SOURCE=.\Filter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\HColorBar.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -131,6 +135,10 @@ SOURCE=.\ShapeEllipse.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeFont.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ShapeLine.cpp
 # End Source File
 # Begin Source File
@@ -154,6 +162,10 @@ SOURCE=.\ShapeTriangle.cpp
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
+# Begin Source File
+
+SOURCE=.\TextDlg.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -161,6 +173,10 @@ SOURCE=.\StdAfx.cpp
 # Begin Source File
 
 SOURCE=.\Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE="..\《实训》\softhy.net\VC画图源代码文档在线提供\HDraw\HColorBar.h"
 # End Source File
 # Begin Source File
 
@@ -200,6 +216,10 @@ SOURCE=.\ShapeEllipse.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ShapeFont.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ShapeLine.h
 # End Source File
 # Begin Source File
@@ -221,6 +241,14 @@ SOURCE=.\ShapeTriangle.h
 # Begin Source File
 
 SOURCE=.\StdAfx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TextDlg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TiffStruct.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -245,6 +273,10 @@ SOURCE=.\res\paint.rc2
 # Begin Source File
 
 SOURCE=.\res\paintDoc.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\setline.bmp
 # End Source File
 # Begin Source File
 

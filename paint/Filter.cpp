@@ -54,17 +54,17 @@ CBitmap MemBitmap;
 MemDC.CreateCompatibleDC(NULL);  
 //这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 //下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-MemBitmap.CreateCompatibleBitmap(pDC,800,600);  
+MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 //将位图选入到内存设备描述表  
 //只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 //先用背景色将位图清除干净，这里我用的是白色作为背景  
 //你也可以用自己应该用的颜色  
-MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));  
+MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 //绘图  
-	for (int i = x1;i<x2;++i)
-	{
-		for (int j = y1;j<y2;++j)
+for (int i = 0;i<x;++i)
+{
+	for (int j = 0;j<y;++j)
 		{
 			COLORREF clr = pDC->GetPixel(i,j);
 			r=GetRValue(clr);
@@ -79,7 +79,7 @@ MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));
 		}
 	}
 
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 void CFilter::Backward(CDC *pDC, int x1, int y1, int x2, int y2)//逆反处理
@@ -146,19 +146,19 @@ void CFilter::Sleek(CDC *pDC, int x1, int y1, int x2, int y2)//平滑处理
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,x2-x1,y2-y1);  
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 	//将位图选入到内存设备描述表  
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,x2-x1,y2-y1,RGB(255,255,255));  
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 //绘图  
 
     int r,g,b;
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			COLORREF clr = pDC->GetPixel(i,j);
 			COLORREF clr1=pDC->GetPixel(i-1,j-1);
@@ -181,7 +181,7 @@ void CFilter::Sleek(CDC *pDC, int x1, int y1, int x2, int y2)//平滑处理
 		}
 	}
 
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 
@@ -210,21 +210,21 @@ void CFilter::Neonred(CDC *pDC, int x1, int y1, int x2, int y2)//霓虹处理
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,800,600);  
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 	//将位图选入到内存设备描述表  
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));  
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 //绘图  
 
 	
 	int r,g,b,r1,g1,b1,r2,g2,b2;
 	
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			COLORREF clr = pDC->GetPixel(i,j);
 			r=GetRValue(clr);
@@ -252,7 +252,7 @@ void CFilter::Neonred(CDC *pDC, int x1, int y1, int x2, int y2)//霓虹处理
 			MemDC.SetPixel(i,j,RGB(r,g,b));
 		}
 	}
-    if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+    if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 
@@ -281,20 +281,20 @@ void CFilter::Sharpen(CDC *pDC, int x1, int y1, int x2, int y2)//锐化处理
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,800,600);  
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 	//将位图选入到内存设备描述表  
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));  
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 //绘图 
 
 	int r,g,b,r1,g1,b1;
 	
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			COLORREF clr = pDC->GetPixel(i,j);
 			r=GetRValue(clr);
@@ -314,7 +314,7 @@ void CFilter::Sharpen(CDC *pDC, int x1, int y1, int x2, int y2)//锐化处理
 			MemDC.SetPixel(i,j,RGB(r,g,b));
 		}
 	}
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 
@@ -344,22 +344,22 @@ void CFilter::Relief(CDC *pDC, int x1, int y1, int x2, int y2)//浮雕处理
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,800,600);  
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 	//将位图选入到内存设备描述表  
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,800,600,RGB(255,255,255));  
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 	//绘图 
 
 
 
 	int r,g,b,r1,g1,b1;
 	
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			COLORREF clr = pDC->GetPixel(i,j);
 			r=GetRValue(clr);
@@ -375,10 +375,10 @@ void CFilter::Relief(CDC *pDC, int x1, int y1, int x2, int y2)//浮雕处理
 			g=g-g1+128;
             b=b-b1+128;
 			
-			MemDC.SetPixel(i,j,RGB(r,g,b));
+		MemDC.SetPixel(i,j,RGB(r,g,b));
 		}
 	}
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 
@@ -408,20 +408,20 @@ void CFilter::Inlay(CDC *pDC, int x1, int y1, int x2, int y2)//镶嵌处理
 	MemDC.CreateCompatibleDC(NULL);  
 	//这时还不能绘图，因为没有位图的设备描述表是不能绘图的  
 	//下面建立一个与屏幕设备描述表（或者内存设备描述表）兼容的位图  
-	MemBitmap.CreateCompatibleBitmap(pDC,x2-x1,y2-y1);  
+	MemBitmap.CreateCompatibleBitmap(pDC,x,y);  
 	//将位图选入到内存设备描述表  
 	//只有选入了位图的设备描述表才有地方绘图，画到指定的位图上  
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);  
 	//先用背景色将位图清除干净，这里我用的是白色作为背景  
 	//你也可以用自己应该用的颜色  
-	MemDC.FillSolidRect(0,0,x2-x1,y2-y1,RGB(255,255,255));  
+	MemDC.FillSolidRect(0,0,x,y,RGB(255,255,255));  
 //绘图  
 
 
 	int r=0,g=0,b=0;
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			COLORREF clr[5];
 			clr[0]=pDC->GetPixel(i,j);			
@@ -446,8 +446,8 @@ void CFilter::Inlay(CDC *pDC, int x1, int y1, int x2, int y2)//镶嵌处理
 		}
 	}
 
-	pDC->BitBlt(0,0,800,600,&MemDC,0,0,SRCCOPY);
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY))
 		AfxMessageBox("错误！");
 }
 
@@ -488,9 +488,9 @@ void CFilter::Diffuse(CDC *pDC, int x1, int y1, int x2, int y2)//扩散处理
 
 	int r,g,b;
 	
-	for (int i = x1;i<x2;++i)
+	for (int i = 0;i<x;++i)
 	{
-		for (int j = y1;j<y2;++j)
+		for (int j = 0;j<y;++j)
 		{
 			int k=rand()%5;
 			COLORREF clr[5];
@@ -506,7 +506,7 @@ void CFilter::Diffuse(CDC *pDC, int x1, int y1, int x2, int y2)//扩散处理
 			MemDC.SetPixel(i,j,RGB(r,g,b));
 		}
 	}
-	if (pDC->BitBlt(x1,y1,x2,y2,&MemDC,x1,y1,SRCCOPY) == 0)
+	if (pDC->BitBlt(x1,y1,x,y,&MemDC,0,0,SRCCOPY) == 0)
 		AfxMessageBox("错误！");
 }
 

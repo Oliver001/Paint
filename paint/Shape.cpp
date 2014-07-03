@@ -18,6 +18,8 @@ static char THIS_FILE[]=__FILE__;
 
 CShape::CShape()
 : m_bSelected(false)
+, m_nRorate(0)
+, mirror(0)
 {
 
 }
@@ -133,3 +135,9 @@ void CShape::SetCurrentPoint(CPoint point)
 		m_points.ElementAt(1) = point;
 	}
 }
+
+void CShape::Rotate()
+{
+	m_nRorate = (m_nRorate+1)%4;
+}
+

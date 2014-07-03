@@ -134,8 +134,15 @@ void CShapeLine::Draw(CDC *pDC)
 	pNew.CreatePen(m_nPenStyle, m_nPenWidth, m_color);
 	pOld = pDC->SelectObject(&pNew);
 	
-	pDC->MoveTo(m_points.GetAt(0));
-	pDC->LineTo(m_points.GetAt(1));
-	
+	if (m_nRorate % 2 )
+	{
+		pDC->MoveTo(m_points[0].x,m_points[1].y);
+		pDC->LineTo(m_points[1].x,m_points[0].y);
+	}
+	else
+	{
+		pDC->MoveTo(m_points.GetAt(0));
+		pDC->LineTo(m_points.GetAt(1));
+	}
 	pDC->SelectObject(pOld);
 }

@@ -98,6 +98,8 @@ BEGIN
     BUTTON      ID_EDIT_PASTE
     SEPARATOR
     BUTTON      ID_APP_EXIT
+    BUTTON      IDR_SETLINE_W
+    BUTTON      IDR_SETLINE_S
 END
 
 IDR_DRAWBAR TOOLBAR DISCARDABLE  30, 30
@@ -113,6 +115,7 @@ BEGIN
     BUTTON      IDM_RECTANGLE
     SEPARATOR
     BUTTON      IDM_FIVEANGLE
+    BUTTON      IDR_TEXT
 END
 
 IDR_GEOMTRANSBAR TOOLBAR DISCARDABLE  30, 30
@@ -121,11 +124,10 @@ BEGIN
     BUTTON      ID_UPTRANSLATION
     BUTTON      ID_DOWNTRANSLATION
     BUTTON      ID_RIGHTTRANSLATION
+    SEPARATOR
     BUTTON      ID_RIGHTSPIN
     BUTTON      ID_LEFTSPIN
-    BUTTON      ID_BIGZOOM
     SEPARATOR
-    BUTTON      ID_SMALLZOOM
     BUTTON      ID_UPMIRRORING
     BUTTON      ID_LRMIRRORING
     BUTTON      ID_OAMIRRORING
@@ -141,6 +143,7 @@ BEGIN
     BUTTON      IDM_INLAY
     BUTTON      IDM_EXPOSURE
     BUTTON      IDM_DIFFUSE
+    BUTTON      IDM_GREY
 END
 
 IDR_COLORBAR TOOLBAR DISCARDABLE  500, 36
@@ -168,28 +171,30 @@ BEGIN
     BEGIN
         MENUITEM "撤消(&U)\tCtrl+Z",            ID_EDIT_UNDO
         MENUITEM SEPARATOR
-        MENUITEM "剪切(&T)\tCtrl+X",            ID_EDIT_CUT
-        MENUITEM "复制(&C)\tCtrl+C",            ID_EDIT_COPY
-        MENUITEM "粘贴(&P)\tCtrl+V",            ID_EDIT_PASTE
+        MENUITEM "剪切(&T)\tCtrl+X",            ID_CUT, GRAYED
+        MENUITEM "复制(&C)\tCtrl+C",            ID_COPY, GRAYED
+        MENUITEM "粘贴(&P)\tCtrl+V",            ID_PASTE, GRAYED
     END
     POPUP "显示 ", CHECKED
     BEGIN
         MENUITEM "主工具栏",                    ID_VIEW_TOOLBAR, CHECKED
-        MENUITEM "字体",                        IDM_FONTBAR, CHECKED
+        MENUITEM SEPARATOR
         MENUITEM "几何变换工具条",              IDM_GEOMTRANSBAR, CHECKED
         MENUITEM "滤镜工具条",                  IDM_FILTERBAR, CHECKED
         MENUITEM "绘图工具条",                  IDM_DRAWBAR, CHECKED
         MENUITEM "颜色工具条",                  IDM_COLORBAR
+        MENUITEM "网格",                        ID_NET
     END
     POPUP "绘制"
     BEGIN
         MENUITEM "选择",                        IDM_SELECTSHAPE, GRAYED
-        MENUITEM "直线",                        IDM_LINE
+        MENUITEM "直线",                        IDM_LINE, GRAYED
         MENUITEM "圆",                          IDM_CIRCLE, GRAYED
         MENUITEM "三角形",                      IDM_TRIANGLE, GRAYED
         MENUITEM "矩形",                        IDM_RECTANGLE, GRAYED
         MENUITEM "五边形",                      IDM_FIVEANGLE, GRAYED
-        MENUITEM "填充",                        IDM_FILL
+        MENUITEM SEPARATOR
+        MENUITEM "文字",                        IDR_TEXT
     END
     POPUP "几何变换"
     BEGIN
@@ -205,11 +210,7 @@ BEGIN
             MENUITEM "顺时针旋转",                  ID_RIGHTSPIN
             MENUITEM "逆时针旋转",                  ID_LEFTSPIN
         END
-        POPUP "缩放"
-        BEGIN
-            MENUITEM "放大",                        ID_BIGZOOM
-            MENUITEM "缩小",                        ID_SMALLZOOM
-        END
+        MENUITEM SEPARATOR
         POPUP "镜像"
         BEGIN
             MENUITEM "垂直镜像",                    ID_UPMIRRORING
@@ -227,11 +228,35 @@ BEGIN
         MENUITEM "镶嵌",                        IDM_INLAY
         MENUITEM "曝光",                        IDM_EXPOSURE
         MENUITEM "扩散",                        IDM_DIFFUSE
+        MENUITEM "灰度",                        IDM_GREY
     END
     POPUP "帮助(&H)"
     BEGIN
         MENUITEM "帮助",                        IDM_HELP
         MENUITEM "关于 paint(&A)...",           ID_APP_ABOUT
+    END
+END
+
+IDR_MENU1 MENU DISCARDABLE 
+BEGIN
+    POPUP "线条宽度"
+    BEGIN
+        MENUITEM "1像素",                       ID_PIXEL1
+        MENUITEM "2像素",                       ID_PIXEL2
+        MENUITEM "5像素",                       ID_Pixel5
+        MENUITEM "10像素",                      ID_PIXEL10
+        MENUITEM "15像素",                      ID_PIXEL15
+        MENUITEM "20像素",                      ID_PIXEL20
+    END
+END
+
+IDR_MENU2 MENU DISCARDABLE 
+BEGIN
+    POPUP "设置线形"
+    BEGIN
+        MENUITEM "实线",                        ID_SOLID
+        MENUITEM "虚线",                        ID_DASH
+        MENUITEM "点划线",                      ID_DOT
     END
 END
 
@@ -274,6 +299,17 @@ BEGIN
     LTEXT           "paint 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "版权所有 (C) 2014",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_DIALOG1 DIALOG DISCARDABLE  0, 0, 187, 64
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,25,43,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,119,43,50,14
+    EDITTEXT        IDC_TEXT,18,25,153,13,ES_AUTOHSCROLL
+    LTEXT           "请输入要绘制的文字：",IDC_STATIC,7,13,104,8
 END
 
 
@@ -334,6 +370,14 @@ BEGIN
         RIGHTMARGIN, 228
         TOPMARGIN, 7
         BOTTOMMARGIN, 48
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 57
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -512,6 +556,28 @@ BEGIN
     IDM_SHARPEN             "锐化处理"
     IDM_RELIEF              "浮雕处理"
     IDM_INLAY               "镶嵌处理"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_LINE_W               "设置线宽度"
+    ID_MENUITEM32836        "2像素"
+    ID_MENUITEM32837        "宽度为5像素"
+    ID_MENUITEM32838        "宽度为10像素"
+    IDM_GREY                "灰度化"
+    ID_PIXEL2               "宽度为2像素"
+    ID_MENUITEM32845        "宽度为15像素"
+    ID_MENUITEM32847        "宽度为20像素"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SOLID                "实线"
+    ID_DASH                 "虚线"
+    IDR_SETLINE_S           "设置线形"
+    ID_PIXEL1               "宽度为1像素"
+    IDR_TEXT                "输入文字"
+    ID_NET                  "是否显示网格"
 END
 
 #endif    // Chinese (P.R.C.) resources

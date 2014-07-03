@@ -54,14 +54,40 @@ void CShapeTriangle::Draw(CDC *pDC)
 		miny = m_points[1].y;
 		maxy = m_points[0].y;
 	}
+
 	
 	CRgn rgn;
 	CPoint point[3];
 	CBrush brush;
 	brush.CreateStockObject(NULL_BRUSH);
-	point[0].x =(minx+maxx)>>1;point[0].y = miny;
-	point[1].x = minx;point[1].y = maxy;
-	point[2].x = maxx;point[2].y = maxy;
+	
+	if (m_nRorate == 0)
+	{
+		point[0].x =(minx+maxx)>>1;point[0].y = miny;
+		point[1].x = minx;point[1].y = maxy;
+		point[2].x = maxx;point[2].y = maxy;
+	}
+	else if (m_nRorate  == 1)
+	{
+		point[0].x = minx;point[0].y = miny;
+		point[1].x = minx;point[1].y = maxy;
+		point[2].x = maxx;point[2].y = (miny+maxy)>>1;
+	}
+	else if (m_nRorate  == 2)
+	{
+		point[0].x = minx;point[0].y = miny;
+		point[1].x = (minx+maxx)>>1;point[1].y = maxy;
+		point[2].x = maxx;point[2].y = miny;
+	}
+	else if (m_nRorate  == 3)
+	{
+		point[0].x = minx;point[0].y = (miny+maxy)>>1;
+		point[1].x = maxx;point[1].y = maxy;
+		point[2].x = maxx;point[2].y = miny;
+	}
+// 	point[0].x =(minx+maxx)>>1;point[0].y = miny;
+// 	point[1].x = minx;point[1].y = maxy;
+// 	point[2].x = maxx;point[2].y = maxy;
 	if (rgn.CreatePolygonRgn(point,3,ALTERNATE))
 	{
 		pDC->FillRgn(&rgn,&brush);

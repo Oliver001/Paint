@@ -28,7 +28,6 @@ public:
 	CDocument *pOldDoc;
 	CBitmap bitmap;
 	CFilter fil;
-	
 // Operations
 public:
 // Overrides
@@ -46,7 +45,6 @@ public:
 
 // Implementation
 public:
-	CShape* m_shape;
 	virtual ~CPaintView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -71,6 +69,7 @@ protected:
 	afx_msg void OnInlay();
 	afx_msg void OnDiffuse();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+	afx_msg void OnGrey();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

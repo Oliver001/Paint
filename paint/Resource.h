@@ -11,6 +11,10 @@
 #define IDR_FILTERBAR                   135
 #define IDB_BG                          137
 #define IDR_COLORBAR                    138
+#define IDR_MENU1                       142
+#define IDR_MENU2                       144
+#define IDD_DIALOG1                     145
+#define IDC_TEXT                        1000
 #define ID_SELECTSHAPE                  32771
 #define IDM_SELECTSHAPE                 32771
 #define ID_DRAWLINE                     32772
@@ -65,6 +69,29 @@
 #define ID_COLORBAR                     32826
 #define IDM_FILL                        32828
 #define ID_FILEOPEN                     32829
+#define ID_COPY                         32830
+#define ID_PASTE                        32831
+#define ID_CUT                          32832
+#define ID_LINE_W                       32834
+#define ID_MENUITEM32836                32836
+#define ID_MENUITEM32837                32837
+#define ID_MENUITEM32838                32838
+#define IDM_GREY                        32841
+#define ID_PIXEL2                       32843
+#define IDR_SETLINE_W                   32844
+#define ID_MENUITEM32845                32845
+#define ID_PIXEL15                      32846
+#define ID_MENUITEM32847                32847
+#define ID_PIXEL20                      32848
+#define ID_Pixel5                       32849
+#define ID_PIXEL10                      32850
+#define ID_SOLID                        32851
+#define ID_DOT                          32852
+#define ID_DASH                         32853
+#define IDR_SETLINE_S                   32854
+#define ID_PIXEL1                       32856
+#define IDR_TEXT                        32857
+#define ID_NET                          32858
 #define ID_INDICATOR_CUR_POSITION_X     61446
 #define ID_INDICATOR_CUR_POSITION_Y     61447
 
@@ -73,9 +100,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        140
-#define _APS_NEXT_COMMAND_VALUE         32830
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_RESOURCE_VALUE        146
+#define _APS_NEXT_COMMAND_VALUE         32859
+#define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
